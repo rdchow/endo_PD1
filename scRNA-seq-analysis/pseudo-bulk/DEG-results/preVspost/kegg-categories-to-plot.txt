@@ -1,0 +1,22 @@
+Category	d
+Ribosome	Ribosome
+T cell receptor signaling pathway	T cell receptor signaling pathway
+Glycolysis / Gluconeogenesis	Glycolysis / Gluconeogenesis
+PD-L1 expression and PD-1 checkpoint pathway in cancer	PD-L1 expression and PD-1 checkpoint pathway in cancer
+Glutamatergic synapse	Glutamatergic synapse
+GABAergic synapse	GABAergic synapse
+Oxytocin signaling pathway	Oxytocin signaling pathway
+Cellular senescence	Cellular senescence
+Oxidative phosphorylation	Oxidative phosphorylation
+mRNA surveillance pathway	mRNA surveillance pathway
+Phagosome	Phagosome
+Protein processing in endoplasmic reticulum	Protein processing in endoplasmic reticulum
+Antigen processing and presentation	Antigen processing and presentation
+Endocytosis	Endocytosis
+Protein export	Protein export
+Cell adhesion molecules	Cell adhesion molecules
+Tight junction	Tight junction
+Focal adhesion	Focal adhesion
+Leukocyte transendothelial migration	Leukocyte transendothelial migration
+Regulation of actin cytoskeleton	Regulation of actin cytoskeleton
+Cytosolic DNA-sensing pathway	Cytosolic DNA-sensing pathway

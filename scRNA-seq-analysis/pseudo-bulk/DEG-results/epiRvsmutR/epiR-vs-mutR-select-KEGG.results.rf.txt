@@ -1,0 +1,165 @@
+Cluster	cellType	Time	Pathway	nlp	GeneRatio
+CD16-NK:NLR:post:Antigen processing and presentation	CD16-NK	post	Antigen processing and presentation	5.86325659008966	0.0447761194029851
+CD16-NK:NLR:post:Apoptosis	CD16-NK	post	Apoptosis	1.45572587110112	0.0348258706467662
+CD16-NK:NLR:post:Cell adhesion molecules	CD16-NK	post	Cell adhesion molecules	1.0871282391495	0.0348258706467662
+CD16-NK:NLR:post:Fatty acid metabolism	CD16-NK	post	Fatty acid metabolism	1.48239425507043	0.0199004975124378
+CD16-NK:NLR:post:Graft-versus-host disease	CD16-NK	post	Graft-versus-host disease	3.45874597817868	0.0248756218905473
+CD16-NK:NLR:post:HIF-1 signaling pathway	CD16-NK	post	HIF-1 signaling pathway	-1.34830122789978	-0.0363128491620112
+CD16-NK:NLR:post:Leukocyte transendothelial migration	CD16-NK	post	Leukocyte transendothelial migration	1.67593449414376	0.0323383084577114
+CD16-NK:NLR:post:Lysosome	CD16-NK	post	Lysosome	1.27996774432994	0.0323383084577114
+CD16-NK:NLR:post:NF-kappa B signaling pathway	CD16-NK	post	NF-kappa B signaling pathway	1.96759784509989	0.0323383084577114
+CD16-NK:NLR:post:NOD-like receptor signaling pathway	CD16-NK	post	NOD-like receptor signaling pathway	3.75114029317567	0.0597014925373134
+CD16-NK:NLR:post:Natural killer cell mediated cytotoxicity	CD16-NK	post	Natural killer cell mediated cytotoxicity	2.73588885644923	0.0422885572139304
+CD16-NK:NLR:post:Nucleotide metabolism	CD16-NK	post	Nucleotide metabolism	0.743984861101545	0.0199004975124378
+CD16-NK:NLR:post:Oxidative phosphorylation	CD16-NK	post	Oxidative phosphorylation	-1.34830122789978	-0.0418994413407821
+CD16-NK:NLR:post:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD16-NK	post	PD-L1 expression and PD-1 checkpoint pathway in cancer	-1.05722123083985	-0.0279329608938547
+CD16-NK:NLR:post:RNA degradation	CD16-NK	post	RNA degradation	-0.74916868077918	-0.0223463687150838
+CD16-NK:NLR:post:Ribosome	CD16-NK	post	Ribosome	-11.9695198371547	-0.0949720670391061
+CD16-NK:NLR:post:T cell receptor signaling pathway	CD16-NK	post	T cell receptor signaling pathway	-0.798020958958434	-0.0279329608938547
+CD16-NK:NLR:post:TNF signaling pathway	CD16-NK	post	TNF signaling pathway	-0.722996588337221	-0.0279329608938547
+CD16-NK:NLR:post:Th1 and Th2 cell differentiation	CD16-NK	post	Th1 and Th2 cell differentiation	3.39259555513235	0.0373134328358209
+CD16-NK:NLR:pre:Antigen processing and presentation	CD16-NK	pre	Antigen processing and presentation	-3.00935945435911	-0.0474137931034483
+CD16-NK:NLR:pre:Ferroptosis	CD16-NK	pre	Ferroptosis	-2.05425144419352	-0.0301724137931034
+CD16-NK:NLR:pre:Graft-versus-host disease	CD16-NK	pre	Graft-versus-host disease	-1.23992686572142	-0.0258620689655172
+CD16-NK:NLR:pre:Leukocyte transendothelial migration	CD16-NK	pre	Leukocyte transendothelial migration	1.22894812302806	0.03690036900369
+CD16-NK:NLR:pre:Lysosome	CD16-NK	pre	Lysosome	1.05607558569637	0.03690036900369
+CD16-NK:NLR:pre:NOD-like receptor signaling pathway	CD16-NK	pre	NOD-like receptor signaling pathway	0.884145998348315	0.044280442804428
+CD16-NK:NLR:pre:Natural killer cell mediated cytotoxicity	CD16-NK	pre	Natural killer cell mediated cytotoxicity	1.06444808872352	0.03690036900369
+CD16-NK:NLR:pre:Oxidative phosphorylation	CD16-NK	pre	Oxidative phosphorylation	2.33738692039515	0.0516605166051661
+CD16-NK:NLR:pre:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD16-NK	pre	PD-L1 expression and PD-1 checkpoint pathway in cancer	0.746519515666305	0.025830258302583
+CD16-NK:NLR:pre:Ribosome	CD16-NK	pre	Ribosome	-8.48894672527621	-0.103448275862069
+CD16-NK:NLR:pre:Th1 and Th2 cell differentiation	CD16-NK	pre	Th1 and Th2 cell differentiation	1.07048921202612	0.029520295202952
+CD4-Activated:NLR:post:Antigen processing and presentation	CD4-Activated	post	Antigen processing and presentation	2.71303367809152	0.0281425891181989
+CD4-Activated:NLR:post:Apoptosis	CD4-Activated	post	Apoptosis	2.63725338896518	0.0393996247654784
+CD4-Activated:NLR:post:Fatty acid metabolism	CD4-Activated	post	Fatty acid metabolism	1.6590539526555	0.0187617260787993
+CD4-Activated:NLR:post:Graft-versus-host disease	CD4-Activated	post	Graft-versus-host disease	2.01586668609405	0.0168855534709193
+CD4-Activated:NLR:post:Lysine degradation	CD4-Activated	post	Lysine degradation	-0.715963644897456	-0.0187110187110187
+CD4-Activated:NLR:post:Lysosome	CD4-Activated	post	Lysosome	2.10874188355576	0.0356472795497186
+CD4-Activated:NLR:post:NF-kappa B signaling pathway	CD4-Activated	post	NF-kappa B signaling pathway	2.06603370079419	0.0300187617260788
+CD4-Activated:NLR:post:NOD-like receptor signaling pathway	CD4-Activated	post	NOD-like receptor signaling pathway	4.78985562443938	0.0600375234521576
+CD4-Activated:NLR:post:Natural killer cell mediated cytotoxicity	CD4-Activated	post	Natural killer cell mediated cytotoxicity	1.25787623544002	0.0300187617260788
+CD4-Activated:NLR:post:Oxidative phosphorylation	CD4-Activated	post	Oxidative phosphorylation	1.19376507432084	0.0300187617260788
+CD4-Activated:NLR:post:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Activated	post	PD-L1 expression and PD-1 checkpoint pathway in cancer	-0.715963644897456	-0.0249480249480249
+CD4-Activated:NLR:post:Ribosome	CD4-Activated	post	Ribosome	-6.26685450954359	-0.0644490644490645
+CD4-Activated:NLR:post:TNF signaling pathway	CD4-Activated	post	TNF signaling pathway	1.19059733031093	0.026266416510319
+CD4-Activated:NLR:post:Toll-like receptor signaling pathway	CD4-Activated	post	Toll-like receptor signaling pathway	1.37681417080622	0.026266416510319
+CD4-Activated:NLR:pre:Apoptosis	CD4-Activated	pre	Apoptosis	-2.14721989497287	-0.0601092896174863
+CD4-Activated:NLR:pre:Cell adhesion molecules	CD4-Activated	pre	Cell adhesion molecules	-0.792531280691133	-0.0382513661202186
+CD4-Activated:NLR:pre:Cellular senescence	CD4-Activated	pre	Cellular senescence	-1.21134399016007	-0.0491803278688525
+CD4-Activated:NLR:pre:Ferroptosis	CD4-Activated	pre	Ferroptosis	-2.14721989497287	-0.0327868852459016
+CD4-Activated:NLR:pre:HIF-1 signaling pathway	CD4-Activated	pre	HIF-1 signaling pathway	-1.1835059717413	-0.0382513661202186
+CD4-Activated:NLR:pre:Lysosome	CD4-Activated	pre	Lysosome	-1.21134399016007	-0.0437158469945355
+CD4-Activated:NLR:pre:Mitophagy - animal	CD4-Activated	pre	Mitophagy - animal	0.826834419566617	0.0257731958762887
+CD4-Activated:NLR:pre:NF-kappa B signaling pathway	CD4-Activated	pre	NF-kappa B signaling pathway	1.05253617147063	0.0360824742268041
+CD4-Activated:NLR:pre:NOD-like receptor signaling pathway	CD4-Activated	pre	NOD-like receptor signaling pathway	2.83286618998759	0.077319587628866
+CD4-Activated:NLR:pre:Natural killer cell mediated cytotoxicity	CD4-Activated	pre	Natural killer cell mediated cytotoxicity	1.25977921594898	0.0463917525773196
+CD4-Activated:NLR:pre:Nucleotide metabolism	CD4-Activated	pre	Nucleotide metabolism	-1.45649005402892	-0.0382513661202186
+CD4-Activated:NLR:pre:Oxidative phosphorylation	CD4-Activated	pre	Oxidative phosphorylation	2.51791096601614	0.0618556701030928
+CD4-Activated:NLR:pre:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Activated	pre	PD-L1 expression and PD-1 checkpoint pathway in cancer	-3.05513810673364	-0.0601092896174863
+CD4-Activated:NLR:pre:Phosphatidylinositol signaling system	CD4-Activated	pre	Phosphatidylinositol signaling system	0.826834419566617	0.0309278350515464
+CD4-Activated:NLR:pre:Ribosome	CD4-Activated	pre	Ribosome	15.2270543681646	0.149484536082474
+CD4-Activated:NLR:pre:T cell receptor signaling pathway	CD4-Activated	pre	T cell receptor signaling pathway	-2.71871601421714	-0.0601092896174863
+CD4-Activated:NLR:pre:TNF signaling pathway	CD4-Activated	pre	TNF signaling pathway	-2.69413004698565	-0.0601092896174863
+CD4-Activated:NLR:pre:Th1 and Th2 cell differentiation	CD4-Activated	pre	Th1 and Th2 cell differentiation	-1.75915585725073	-0.0437158469945355
+CD4-Activated:NLR:pre:Toll-like receptor signaling pathway	CD4-Activated	pre	Toll-like receptor signaling pathway	-0.729398221926742	-0.0273224043715847
+CD4-Naive:NLR:post:Antigen processing and presentation	CD4-Naive	post	Antigen processing and presentation	4.01061167595957	0.0341880341880342
+CD4-Naive:NLR:post:Apoptosis	CD4-Naive	post	Apoptosis	5.30826627549651	0.0534188034188034
+CD4-Naive:NLR:post:Cell adhesion molecules	CD4-Naive	post	Cell adhesion molecules	0.75243951910233	0.0299145299145299
+CD4-Naive:NLR:post:Fatty acid metabolism	CD4-Naive	post	Fatty acid metabolism	0.895168043154572	0.014957264957265
+CD4-Naive:NLR:post:Graft-versus-host disease	CD4-Naive	post	Graft-versus-host disease	1.92231100181522	0.0170940170940171
+CD4-Naive:NLR:post:Leukocyte transendothelial migration	CD4-Naive	post	Leukocyte transendothelial migration	3.10801360621507	0.0384615384615385
+CD4-Naive:NLR:post:Lysine degradation	CD4-Naive	post	Lysine degradation	-2.23746938405612	-0.0298850574712644
+CD4-Naive:NLR:post:Lysosome	CD4-Naive	post	Lysosome	0.914597626547942	0.0277777777777778
+CD4-Naive:NLR:post:NF-kappa B signaling pathway	CD4-Naive	post	NF-kappa B signaling pathway	0.940250152188216	0.0235042735042735
+CD4-Naive:NLR:post:NOD-like receptor signaling pathway	CD4-Naive	post	NOD-like receptor signaling pathway	4.97581466015179	0.061965811965812
+CD4-Naive:NLR:post:Natural killer cell mediated cytotoxicity	CD4-Naive	post	Natural killer cell mediated cytotoxicity	1.78277275745478	0.0341880341880342
+CD4-Naive:NLR:post:Oxidative phosphorylation	CD4-Naive	post	Oxidative phosphorylation	2.80778267071338	0.0405982905982906
+CD4-Naive:NLR:post:RNA degradation	CD4-Naive	post	RNA degradation	-1.47543505155424	-0.0298850574712644
+CD4-Naive:NLR:post:Ribosome	CD4-Naive	post	Ribosome	3.0763676859159	0.047008547008547
+CD4-Naive:NLR:post:TNF signaling pathway	CD4-Naive	post	TNF signaling pathway	1.02717763875976	0.0256410256410256
+CD4-Naive:NLR:post:Th1 and Th2 cell differentiation	CD4-Naive	post	Th1 and Th2 cell differentiation	1.94573506973518	0.0277777777777778
+CD4-Naive:NLR:pre:Cellular senescence	CD4-Naive	pre	Cellular senescence	-0.823887205492824	-0.049079754601227
+CD4-Naive:NLR:pre:Ferroptosis	CD4-Naive	pre	Ferroptosis	-0.885494101762394	-0.0245398773006135
+CD4-Naive:NLR:pre:HIF-1 signaling pathway	CD4-Naive	pre	HIF-1 signaling pathway	0.714956649577901	0.0359712230215827
+CD4-Naive:NLR:pre:Lysosome	CD4-Naive	pre	Lysosome	-1.00781001951004	-0.049079754601227
+CD4-Naive:NLR:pre:NOD-like receptor signaling pathway	CD4-Naive	pre	NOD-like receptor signaling pathway	1.66547572241759	0.0719424460431655
+CD4-Naive:NLR:pre:Nucleotide metabolism	CD4-Naive	pre	Nucleotide metabolism	-1.96244127780938	-0.049079754601227
+CD4-Naive:NLR:pre:Oxidative phosphorylation	CD4-Naive	pre	Oxidative phosphorylation	1.75513090524716	0.0647482014388489
+CD4-Naive:NLR:pre:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Naive	pre	PD-L1 expression and PD-1 checkpoint pathway in cancer	-0.885494101762394	-0.0368098159509202
+CD4-Naive:NLR:pre:Phosphatidylinositol signaling system	CD4-Naive	pre	Phosphatidylinositol signaling system	0.83025185304469	0.0359712230215827
+CD4-Naive:NLR:pre:Ribosome	CD4-Naive	pre	Ribosome	10.5037811364447	0.151079136690647
+CD4-Naive:NLR:pre:T cell receptor signaling pathway	CD4-Naive	pre	T cell receptor signaling pathway	-1.5709886010612	-0.049079754601227
+CD4-Naive:NLR:pre:Th1 and Th2 cell differentiation	CD4-Naive	pre	Th1 and Th2 cell differentiation	1.28985084007261	0.0431654676258993
+CD56-NK:NLR:post:Antigen processing and presentation	CD56-NK	post	Antigen processing and presentation	1.244558418762	0.107142857142857
+CD56-NK:NLR:post:Apoptosis	CD56-NK	post	Apoptosis	-0.787533103203727	-0.0555555555555556
+CD56-NK:NLR:post:Cellular senescence	CD56-NK	post	Cellular senescence	-1.47505515922881	-0.0925925925925926
+CD56-NK:NLR:post:Ferroptosis	CD56-NK	post	Ferroptosis	-0.896430901265222	-0.037037037037037
+CD56-NK:NLR:post:Graft-versus-host disease	CD56-NK	post	Graft-versus-host disease	0.982770940274818	0.0714285714285714
+CD56-NK:NLR:post:NF-kappa B signaling pathway	CD56-NK	post	NF-kappa B signaling pathway	-2.1032669135192	-0.0925925925925926
+CD56-NK:NLR:post:Natural killer cell mediated cytotoxicity	CD56-NK	post	Natural killer cell mediated cytotoxicity	0.982770940274818	0.107142857142857
+CD56-NK:NLR:post:Oxidative phosphorylation	CD56-NK	post	Oxidative phosphorylation	-0.787533103203727	-0.0555555555555556
+CD56-NK:NLR:post:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD56-NK	post	PD-L1 expression and PD-1 checkpoint pathway in cancer	-1.55372018769581	-0.0740740740740741
+CD56-NK:NLR:post:Ribosome	CD56-NK	post	Ribosome	-15.715017196772	-0.333333333333333
+CD56-NK:NLR:post:T cell receptor signaling pathway	CD56-NK	post	T cell receptor signaling pathway	-2.1032669135192	-0.0925925925925926
+CD56-NK:NLR:post:TNF signaling pathway	CD56-NK	post	TNF signaling pathway	-2.53650878829328	-0.111111111111111
+CD56-NK:NLR:post:Th1 and Th2 cell differentiation	CD56-NK	post	Th1 and Th2 cell differentiation	-0.938800612171972	-0.0555555555555556
+CD56-NK:NLR:post:Toll-like receptor signaling pathway	CD56-NK	post	Toll-like receptor signaling pathway	-2.1032669135192	-0.0925925925925926
+CD56-NK:NLR:pre:Ferroptosis	CD56-NK	pre	Ferroptosis	-2.17657846676557	-0.142857142857143
+CD56-NK:NLR:pre:Ribosome	CD56-NK	pre	Ribosome	32.7922839901643	0.91304347826087
+CD8-Activated:NLR:post:Antigen processing and presentation	CD8-Activated	post	Antigen processing and presentation	1.43134663997943	0.0225988700564972
+CD8-Activated:NLR:post:Apoptosis	CD8-Activated	post	Apoptosis	2.11947341690476	0.0376647834274953
+CD8-Activated:NLR:post:Fatty acid metabolism	CD8-Activated	post	Fatty acid metabolism	2.31489548364551	0.0225988700564972
+CD8-Activated:NLR:post:Ferroptosis	CD8-Activated	post	Ferroptosis	0.769105760866553	0.0112994350282486
+CD8-Activated:NLR:post:Graft-versus-host disease	CD8-Activated	post	Graft-versus-host disease	0.738282439714941	0.0112994350282486
+CD8-Activated:NLR:post:Leukocyte transendothelial migration	CD8-Activated	post	Leukocyte transendothelial migration	0.852202958174628	0.0244821092278719
+CD8-Activated:NLR:post:Lysosome	CD8-Activated	post	Lysosome	2.53686193227111	0.0395480225988701
+CD8-Activated:NLR:post:NF-kappa B signaling pathway	CD8-Activated	post	NF-kappa B signaling pathway	1.30668654818477	0.0263653483992467
+CD8-Activated:NLR:post:NOD-like receptor signaling pathway	CD8-Activated	post	NOD-like receptor signaling pathway	2.52053638375193	0.0489642184557439
+CD8-Activated:NLR:post:Natural killer cell mediated cytotoxicity	CD8-Activated	post	Natural killer cell mediated cytotoxicity	1.39968856080729	0.032015065913371
+CD8-Activated:NLR:post:Nucleotide metabolism	CD8-Activated	post	Nucleotide metabolism	0.769105760866553	0.0188323917137476
+CD8-Activated:NLR:post:Oxidative phosphorylation	CD8-Activated	post	Oxidative phosphorylation	-4.33544239796974	-0.0649819494584837
+CD8-Activated:NLR:post:RNA degradation	CD8-Activated	post	RNA degradation	-0.716605887268842	-0.0252707581227437
+CD8-Activated:NLR:post:Ribosome	CD8-Activated	post	Ribosome	-12.6487445533657	-0.111913357400722
+CD8-Activated:NLR:post:T cell receptor signaling pathway	CD8-Activated	post	T cell receptor signaling pathway	-1.55687179496979	-0.0397111913357401
+CD8-Activated:NLR:post:Th1 and Th2 cell differentiation	CD8-Activated	post	Th1 and Th2 cell differentiation	0.843718637606863	0.0207156308851224
+CD8-Activated:NLR:pre:Antigen processing and presentation	CD8-Activated	pre	Antigen processing and presentation	-1.21257517546103	-0.0298507462686567
+CD8-Activated:NLR:pre:Apoptosis	CD8-Activated	pre	Apoptosis	1.49713883998036	0.0336283185840708
+CD8-Activated:NLR:pre:Cell adhesion molecules	CD8-Activated	pre	Cell adhesion molecules	-0.772195676750597	-0.0373134328358209
+CD8-Activated:NLR:pre:Ferroptosis	CD8-Activated	pre	Ferroptosis	-0.994724487338185	-0.0186567164179104
+CD8-Activated:NLR:pre:Graft-versus-host disease	CD8-Activated	pre	Graft-versus-host disease	-0.970622387668417	-0.0186567164179104
+CD8-Activated:NLR:pre:Leukocyte transendothelial migration	CD8-Activated	pre	Leukocyte transendothelial migration	1.52684041515031	0.0300884955752212
+CD8-Activated:NLR:pre:Lysosome	CD8-Activated	pre	Lysosome	2.00159468958569	0.0371681415929204
+CD8-Activated:NLR:pre:Mitophagy - animal	CD8-Activated	pre	Mitophagy - animal	-1.28341845516486	-0.0298507462686567
+CD8-Activated:NLR:pre:NF-kappa B signaling pathway	CD8-Activated	pre	NF-kappa B signaling pathway	0.836547623137468	0.0230088495575221
+CD8-Activated:NLR:pre:NOD-like receptor signaling pathway	CD8-Activated	pre	NOD-like receptor signaling pathway	2.29439072488118	0.0495575221238938
+CD8-Activated:NLR:pre:Natural killer cell mediated cytotoxicity	CD8-Activated	pre	Natural killer cell mediated cytotoxicity	1.55162560163737	0.0336283185840708
+CD8-Activated:NLR:pre:Oxidative phosphorylation	CD8-Activated	pre	Oxidative phosphorylation	-1.37287988823355	-0.0447761194029851
+CD8-Activated:NLR:pre:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD8-Activated	pre	PD-L1 expression and PD-1 checkpoint pathway in cancer	-1.28341845516486	-0.0335820895522388
+CD8-Activated:NLR:pre:Phosphatidylinositol signaling system	CD8-Activated	pre	Phosphatidylinositol signaling system	2.20233298327523	0.031858407079646
+CD8-Activated:NLR:pre:Ribosome	CD8-Activated	pre	Ribosome	-13.1003616014411	-0.115671641791045
+CD8-Activated:NLR:pre:T cell receptor signaling pathway	CD8-Activated	pre	T cell receptor signaling pathway	-3.28082528035682	-0.0522388059701493
+CD8-Activated:NLR:pre:TNF signaling pathway	CD8-Activated	pre	TNF signaling pathway	-3.02771100215064	-0.0522388059701493
+CD8-Activated:NLR:pre:Th1 and Th2 cell differentiation	CD8-Activated	pre	Th1 and Th2 cell differentiation	-1.25688194406767	-0.0335820895522388
+CD8-Activated:NLR:pre:Toll-like receptor signaling pathway	CD8-Activated	pre	Toll-like receptor signaling pathway	-1.06933870017276	-0.0335820895522388
+CD8-Naive:NLR:post:Antigen processing and presentation	CD8-Naive	post	Antigen processing and presentation	4.74775809382233	0.0714285714285714
+CD8-Naive:NLR:post:Apoptosis	CD8-Naive	post	Apoptosis	3.79019120465266	0.0779220779220779
+CD8-Naive:NLR:post:Cell adhesion molecules	CD8-Naive	post	Cell adhesion molecules	2.64097296190341	0.0714285714285714
+CD8-Naive:NLR:post:Cellular senescence	CD8-Naive	post	Cellular senescence	1.06400227305699	0.0454545454545455
+CD8-Naive:NLR:post:Graft-versus-host disease	CD8-Naive	post	Graft-versus-host disease	4.55834107316462	0.051948051948052
+CD8-Naive:NLR:post:Leukocyte transendothelial migration	CD8-Naive	post	Leukocyte transendothelial migration	1.57000307275428	0.0454545454545455
+CD8-Naive:NLR:post:Mitophagy - animal	CD8-Naive	post	Mitophagy - animal	1.88865276959859	0.038961038961039
+CD8-Naive:NLR:post:NF-kappa B signaling pathway	CD8-Naive	post	NF-kappa B signaling pathway	1.74109923032518	0.0454545454545455
+CD8-Naive:NLR:post:NOD-like receptor signaling pathway	CD8-Naive	post	NOD-like receptor signaling pathway	3.2047551269999	0.0844155844155844
+CD8-Naive:NLR:post:Natural killer cell mediated cytotoxicity	CD8-Naive	post	Natural killer cell mediated cytotoxicity	2.24001344390174	0.0584415584415584
+CD8-Naive:NLR:post:Oxidative phosphorylation	CD8-Naive	post	Oxidative phosphorylation	-0.767244623447318	-0.0608695652173913
+CD8-Naive:NLR:post:Ribosome	CD8-Naive	post	Ribosome	-36.3213309685904	-0.339130434782609
+CD8-Naive:NLR:post:TNF signaling pathway	CD8-Naive	post	TNF signaling pathway	1.58828669814105	0.0454545454545455
+CD8-Naive:NLR:post:Th1 and Th2 cell differentiation	CD8-Naive	post	Th1 and Th2 cell differentiation	1.06400227305699	0.0324675324675325
+CD8-Naive:NLR:pre:Antigen processing and presentation	CD8-Naive	pre	Antigen processing and presentation	0.927258082622442	0.0344827586206897
+CD8-Naive:NLR:pre:Leukocyte transendothelial migration	CD8-Naive	pre	Leukocyte transendothelial migration	1.37092185020977	0.0517241379310345
+CD8-Naive:NLR:pre:Mitophagy - animal	CD8-Naive	pre	Mitophagy - animal	1.46700198582411	0.0431034482758621
+CD8-Naive:NLR:pre:NOD-like receptor signaling pathway	CD8-Naive	pre	NOD-like receptor signaling pathway	2.69727460497762	0.0948275862068965
+CD8-Naive:NLR:pre:Natural killer cell mediated cytotoxicity	CD8-Naive	pre	Natural killer cell mediated cytotoxicity	1.55058378683555	0.0603448275862069
+CD8-Naive:NLR:pre:Oxidative phosphorylation	CD8-Naive	pre	Oxidative phosphorylation	1.09308165049646	0.0517241379310345
+CD8-Naive:NLR:pre:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD8-Naive	pre	PD-L1 expression and PD-1 checkpoint pathway in cancer	0.81284980996906	0.0344827586206897
+CD8-Naive:NLR:pre:Ribosome	CD8-Naive	pre	Ribosome	-16.877969070898	-0.265060240963855

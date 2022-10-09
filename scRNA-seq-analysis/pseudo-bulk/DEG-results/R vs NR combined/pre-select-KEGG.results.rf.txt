@@ -1,0 +1,77 @@
+Cluster	cellType	group	Pathway	nlp	GeneRatio
+CD16-NK:LR:Graft-versus-host disease	CD16-NK	LR	Graft-versus-host disease	3.18626264004621	0.0503597122302158
+CD16-NK:LR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD16-NK	LR	PD-L1 expression and PD-1 checkpoint pathway in cancer	1.25944938836249	0.0431654676258993
+CD16-NK:LR:Phagosome	CD16-NK	LR	Phagosome	1.6849699646288	0.0647482014388489
+CD16-NK:LR:Ribosome	CD16-NK	LR	Ribosome	-16.9593954551431	-0.275
+CD16-NK:LR:Th1 and Th2 cell differentiation	CD16-NK	LR	Th1 and Th2 cell differentiation	1.69628493984763	0.0503597122302158
+CD16-NK:NLR:Cellular senescence	CD16-NK	NLR	Cellular senescence	1.76862943679595	0.0430769230769231
+CD16-NK:NLR:Ferroptosis	CD16-NK	NLR	Ferroptosis	-2.3986997094043	-0.0434782608695652
+CD16-NK:NLR:Graft-versus-host disease	CD16-NK	NLR	Graft-versus-host disease	1.65909127232146	0.0184615384615385
+CD16-NK:NLR:NOD-like receptor signaling pathway	CD16-NK	NLR	NOD-like receptor signaling pathway	2.42977954147554	0.0553846153846154
+CD16-NK:NLR:Natural killer cell mediated cytotoxicity	CD16-NK	NLR	Natural killer cell mediated cytotoxicity	1.65909127232146	0.0369230769230769
+CD16-NK:NLR:Oxidative phosphorylation	CD16-NK	NLR	Oxidative phosphorylation	2.19395466286418	0.0430769230769231
+CD16-NK:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD16-NK	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	1.5365677803861	0.0276923076923077
+CD16-NK:NLR:Phagosome	CD16-NK	NLR	Phagosome	2.44245575085463	0.0492307692307692
+CD16-NK:NLR:Proteasome	CD16-NK	NLR	Proteasome	4.50605000119293	0.0369230769230769
+CD16-NK:NLR:Protein processing in endoplasmic reticulum	CD16-NK	NLR	Protein processing in endoplasmic reticulum	1.77550672005002	0.0461538461538462
+CD16-NK:NLR:Ribosome	CD16-NK	NLR	Ribosome	-54.2930939042156	-0.384057971014493
+CD16-NK:NLR:Th1 and Th2 cell differentiation	CD16-NK	NLR	Th1 and Th2 cell differentiation	3.90641818239884	0.0461538461538462
+CD4-Activated:LR:Ferroptosis	CD4-Activated	LR	Ferroptosis	-0.766925417383798	-0.04
+CD4-Activated:LR:HIF-1 signaling pathway	CD4-Activated	LR	HIF-1 signaling pathway	-0.87502349823593	-0.0666666666666667
+CD4-Activated:LR:Ribosome	CD4-Activated	LR	Ribosome	-53.0316452156293	-0.573333333333333
+CD4-Activated:NLR:Cellular senescence	CD4-Activated	NLR	Cellular senescence	-2.73664245617903	-0.0630252100840336
+CD4-Activated:NLR:Ferroptosis	CD4-Activated	NLR	Ferroptosis	-1.74756717852455	-0.0252100840336134
+CD4-Activated:NLR:Graft-versus-host disease	CD4-Activated	NLR	Graft-versus-host disease	1.07255139558678	0.0211864406779661
+CD4-Activated:NLR:HIF-1 signaling pathway	CD4-Activated	NLR	HIF-1 signaling pathway	-0.727506733801763	-0.0294117647058824
+CD4-Activated:NLR:NOD-like receptor signaling pathway	CD4-Activated	NLR	NOD-like receptor signaling pathway	1.46469875342451	0.0593220338983051
+CD4-Activated:NLR:Oxidative phosphorylation	CD4-Activated	NLR	Oxidative phosphorylation	-0.712422772683692	-0.0336134453781513
+CD4-Activated:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Activated	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-1.41170508141602	-0.0336134453781513
+CD4-Activated:NLR:Phagosome	CD4-Activated	NLR	Phagosome	1.36493107489282	0.0508474576271186
+CD4-Activated:NLR:Proteasome	CD4-Activated	NLR	Proteasome	0.978275689672421	0.0211864406779661
+CD4-Activated:NLR:Protein processing in endoplasmic reticulum	CD4-Activated	NLR	Protein processing in endoplasmic reticulum	-3.17489609777885	-0.0714285714285714
+CD4-Activated:NLR:Ribosome	CD4-Activated	NLR	Ribosome	-20.6852949382333	-0.15546218487395
+CD4-Activated:NLR:T cell receptor signaling pathway	CD4-Activated	NLR	T cell receptor signaling pathway	-1.47184073274066	-0.0378151260504202
+CD4-Activated:NLR:Th1 and Th2 cell differentiation	CD4-Activated	NLR	Th1 and Th2 cell differentiation	1.84590930815619	0.0423728813559322
+CD4-Naive:LR:Ribosome	CD4-Naive	LR	Ribosome	-19.1646129736874	-0.441860465116279
+CD4-Naive:NLR:Cellular senescence	CD4-Naive	NLR	Cellular senescence	-2.75489053820926	-0.0846153846153846
+CD4-Naive:NLR:FoxO signaling pathway	CD4-Naive	NLR	FoxO signaling pathway	-0.996291628171578	-0.0461538461538462
+CD4-Naive:NLR:NOD-like receptor signaling pathway	CD4-Naive	NLR	NOD-like receptor signaling pathway	1.40228475385639	0.0975609756097561
+CD4-Naive:NLR:Oxidative phosphorylation	CD4-Naive	NLR	Oxidative phosphorylation	0.77865894247121	0.0609756097560976
+CD4-Naive:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Naive	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-1.00411775077294	-0.0384615384615385
+CD4-Naive:NLR:Proteasome	CD4-Naive	NLR	Proteasome	1.84457043571002	0.0609756097560976
+CD4-Naive:NLR:Ribosome	CD4-Naive	NLR	Ribosome	-17.8499326225708	-0.207692307692308
+CD4-Naive:NLR:T cell receptor signaling pathway	CD4-Naive	NLR	T cell receptor signaling pathway	-1.64265790275429	-0.0538461538461538
+CD4-Naive:NLR:Th1 and Th2 cell differentiation	CD4-Naive	NLR	Th1 and Th2 cell differentiation	-0.996291628171578	-0.0384615384615385
+CD56-NK:LR:Natural killer cell mediated cytotoxicity	CD56-NK	LR	Natural killer cell mediated cytotoxicity	0.865222144433372	0.166666666666667
+CD56-NK:LR:Ribosome	CD56-NK	LR	Ribosome	-17.3796256620293	-0.857142857142857
+CD56-NK:LR:Th1 and Th2 cell differentiation	CD56-NK	LR	Th1 and Th2 cell differentiation	0.865222144433372	0.166666666666667
+CD56-NK:NLR:Ferroptosis	CD56-NK	NLR	Ferroptosis	-0.887836293099979	-0.0689655172413793
+CD56-NK:NLR:Graft-versus-host disease	CD56-NK	NLR	Graft-versus-host disease	1.24604559329661	0.125
+CD56-NK:NLR:NOD-like receptor signaling pathway	CD56-NK	NLR	NOD-like receptor signaling pathway	0.704296779421851	0.125
+CD56-NK:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD56-NK	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-0.704767116713971	-0.0689655172413793
+CD56-NK:NLR:Ribosome	CD56-NK	NLR	Ribosome	1.24604559329661	0.1875
+CD56-NK:NLR:T cell receptor signaling pathway	CD56-NK	NLR	T cell receptor signaling pathway	-0.887836293099979	-0.103448275862069
+CD56-NK:NLR:Th1 and Th2 cell differentiation	CD56-NK	NLR	Th1 and Th2 cell differentiation	0.972086372032617	0.125
+CD8-Activated:LR:HIF-1 signaling pathway	CD8-Activated	LR	HIF-1 signaling pathway	-0.938997179281168	-0.0546875
+CD8-Activated:LR:Ribosome	CD8-Activated	LR	Ribosome	-26.9994013473238	-0.265625
+CD8-Activated:NLR:Ferroptosis	CD8-Activated	NLR	Ferroptosis	-0.755572709789408	-0.0150375939849624
+CD8-Activated:NLR:Graft-versus-host disease	CD8-Activated	NLR	Graft-versus-host disease	1.06592951704677	0.0181268882175227
+CD8-Activated:NLR:HIF-1 signaling pathway	CD8-Activated	NLR	HIF-1 signaling pathway	-1.82065535380706	-0.0413533834586466
+CD8-Activated:NLR:NOD-like receptor signaling pathway	CD8-Activated	NLR	NOD-like receptor signaling pathway	1.25491693568808	0.0483383685800604
+CD8-Activated:NLR:Natural killer cell mediated cytotoxicity	CD8-Activated	NLR	Natural killer cell mediated cytotoxicity	2.27858104415153	0.0513595166163142
+CD8-Activated:NLR:Oxidative phosphorylation	CD8-Activated	NLR	Oxidative phosphorylation	-3.41876328005074	-0.0601503759398496
+CD8-Activated:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD8-Activated	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-1.54552986254544	-0.0338345864661654
+CD8-Activated:NLR:Phagosome	CD8-Activated	NLR	Phagosome	1.44611368324226	0.0453172205438066
+CD8-Activated:NLR:Proteasome	CD8-Activated	NLR	Proteasome	1.63616573860051	0.0241691842900302
+CD8-Activated:NLR:Ribosome	CD8-Activated	NLR	Ribosome	-54.9072892870491	-0.24812030075188
+CD8-Activated:NLR:T cell receptor signaling pathway	CD8-Activated	NLR	T cell receptor signaling pathway	-2.86446758801367	-0.0488721804511278
+CD8-Activated:NLR:Th1 and Th2 cell differentiation	CD8-Activated	NLR	Th1 and Th2 cell differentiation	-0.803782296109918	-0.0263157894736842
+CD8-Naive:LR:Ribosome	CD8-Naive	LR	Ribosome	-19.3352020416052	-0.548387096774194
+CD8-Naive:LR:T cell receptor signaling pathway	CD8-Naive	LR	T cell receptor signaling pathway	1.35829556219527	0.111111111111111
+CD8-Naive:NLR:NOD-like receptor signaling pathway	CD8-Naive	NLR	NOD-like receptor signaling pathway	2.75788664157305	0.0921052631578947
+CD8-Naive:NLR:Natural killer cell mediated cytotoxicity	CD8-Naive	NLR	Natural killer cell mediated cytotoxicity	0.946084243389465	0.0460526315789474
+CD8-Naive:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD8-Naive	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	1.24748566559679	0.0460526315789474
+CD8-Naive:NLR:Phagosome	CD8-Naive	NLR	Phagosome	0.946084243389465	0.0526315789473684
+CD8-Naive:NLR:Proteasome	CD8-Naive	NLR	Proteasome	1.24748566559679	0.0328947368421053
+CD8-Naive:NLR:Ribosome	CD8-Naive	NLR	Ribosome	-33.1524222657347	-0.426666666666667
+CD8-Naive:NLR:Th1 and Th2 cell differentiation	CD8-Naive	NLR	Th1 and Th2 cell differentiation	0.946084243389465	0.0394736842105263

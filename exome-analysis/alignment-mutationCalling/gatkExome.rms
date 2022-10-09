@@ -1,0 +1,743 @@
+#!/usr/bin/env rms
+
+##python
+
+# ja623 2018-02-02
+# Add the capacity to process mapped reads in a parallel fashion.
+# We use the same concept as is used in gatkGenome.rms:
+# 1) Map all reads against the reference.
+# 2) Based on chromosome and position of the mapped read, separate out into roughly equal genomic units.
+# 3) Run RMS steps that process these genomic units independently (and thus, in parallel).
+#
+# This was largely done by copying gatkGenome.rms and pasting in elements of gatkExome.rms
+
+
+import sys
+import os.path
+import re
+import subprocess
+
+genome = "auto"
+callMode = "joint"
+nodes = ""
+filterMode = "recalibration"
+annotMode = "False"
+cleanFlag = False
+
+# Check the command-line arguments, and output the genome name and chromosome ordering.
+argn = 1
+while argn < len(sys.argv):
+    if sys.argv[argn] == "-19":
+        genome = "hg19"
+        argn += 1
+    elif sys.argv[argn] == "-38":
+        genome = "hg38"
+        argn += 1
+    elif sys.argv[argn] == "-nj":
+        callMode = "per-sample"
+        argn += 1
+    elif sys.argv[argn] == "-hf":
+        filterMode = "hard-filter"
+        argn += 1
+    elif sys.argv[argn] == "-a":
+        annotMode = "True"
+        argn += 1
+    elif sys.argv[argn] == "-r":
+        cleanFlag = True
+        argn += 1
+    elif argn + 1 < len(sys.argv) and sys.argv[argn] == "-n":
+        nodes = sys.argv[argn+1]
+        argn += 2
+    else:
+        break
+
+if argn == len(sys.argv) or genome == "auto":
+    if argn < len(sys.argv) and genome == "auto":
+        sys.stderr.write("Error:  The reference must be specified using either the -19 or -38 options.\n\n")
+
+    sys.stderr.write("Usage:  gatkExome.rms { -19 | -38 } [-r] [-nj] [-hf] [-a] [-n #] sampleDir...\n")
+    sys.stderr.write("                -19  - Use hg19 as the reference genome.  One of -19 and -38 must be given.\n")
+    sys.stderr.write("                -38  - Use hg38 as the reference genome. One of -19 and -38 must be given.\n")
+    sys.stderr.write("                -r   - Restart the computation from scratch, removing files from previous runs\n")
+    sys.stderr.write("                -nj  - Do not joint call, call each sample separately\n")
+    sys.stderr.write("                -hf  - Force hard filtering instead of variant recalibration for >= 10 samples\n")
+    sys.stderr.write("                -a   - Automatically annotate the exome_calls.vcf file (or sample_calls.vcf files)\n")
+    sys.stderr.write("                -n # - Limit the number of compute nodes (same as RMS -n option format)\n")
+    sys.exit(-1)
+
+readgroups = {}
+sampleCounts = {}
+
+# Save data for both spreadsheets
+# Write data for fastq splitting spreadsheet
+fileInfoSheetData = []
+pathSplitCount = {}
+sys.stdout.write('##sheet=EOF\n')
+sys.stdout.write('Path\tSplitPath\n')
+
+for currentDir in sys.argv[argn:]:
+    if currentDir.endswith('/'):
+        currentDir = currentDir[:-1]
+
+    sampleName = os.path.basename(currentDir)
+    unalignedDir = os.path.join(currentDir, 'Unaligned')
+    if not os.path.isdir(currentDir) or not os.path.isdir(unalignedDir):
+        sys.stderr.write('ERROR - Cannot find FASTQ files in sample directory: {0}\n'.format(currentDir))
+        sys.exit(-1)
+
+    count = 0
+    for currentR1 in os.listdir(unalignedDir):
+        if not ( currentR1.endswith('.fastq.gz') or currentR1.endswith('.fastq.qp') ):
+            continue
+
+        match = re.search("(.+)_(R\d)_(\d\d\d).(\d+m\.)?fastq.(gz|qp)$", currentR1)
+        if match is None:
+            sys.stderr.write('ERROR - FASTQ file name not in a parsable format: {0}\n'.format(currentR1))
+            sys.exit(-1)
+
+        if match.group(2) != "R1":
+            continue
+
+        pathR1 = os.path.join(unalignedDir, currentR1)
+
+        group = '{0}:::{1}'.format(sampleName, match.group(1))
+        if group not in readgroups:
+            if sampleName not in sampleCounts:
+                sampleCounts[sampleName] = 0
+            sampleCounts[sampleName] += 1
+            readgroups[group] = sampleCounts[sampleName]
+        rgId = readgroups[group]
+
+        count += 1
+        #sys.stdout.write('{0}\t{1}\t{2}\t{3}\n'.format(pathR1, sampleName, match.group(1), rgId))
+        fileInfoSheetData.append([pathR1, sampleName, match.group(1), rgId])
+
+        statInfo = os.stat(pathR1)
+        if '.qp' == currentR1[-3:]:
+            size = statInfo.st_size * 1.5
+        else:
+            size = statInfo.st_size
+        numFiles = int( statInfo.st_size / 500000000.0 + 0.5 ) # rounding to the nearest number.
+
+        pathR2 = pathR1.replace("_R1_", "_R2_")
+
+        if numFiles < 3 or not os.path.exists(pathR2):
+            numFiles = 1
+        elif numFiles > 30:
+            numFiles = 30
+        pathSplitCount[pathR1] = numFiles
+
+        ndx = 1
+        while ndx <= numFiles:
+            if not (numFiles == 1 and pathR1.endswith(".qp")):
+               suffix = "gz"
+            else:
+               suffix = "qp"
+            tempFileName = '{0}_split-{1:03}.fastq.{2}'.format(currentR1[:-9], ndx, suffix)
+            sys.stdout.write('{0}\t{1}\n'.format(pathR1, tempFileName))
+            #splitPathData.append([ [pathR1, tempFileName] ])
+            ndx += 1
+    if 0 == count:
+        sys.stderr.write('ERROR - No FASTQ files found for sample: {0}\n'.format(currentDir))
+        sys.exit(-1)
+
+sys.stdout.write('EOF\n')
+
+# Write data for file info spread sheet
+sys.stdout.write('##sheet=EOF\n')
+sys.stdout.write('Path\tSample\tLane\tRGID\tSplitCount\n')
+for record in fileInfoSheetData:
+    sys.stdout.write('{0}\t{1}\t{2}\t{3}\t{4}\n'.format(record[0], record[1], record[2], record[3], pathSplitCount[record[0]]))
+sys.stdout.write('EOF\n')
+
+# If the restart option was given remove intermediate files.
+def runcmd(cmd):
+    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    if p.returncode != 0:
+        sys.stderr.write("Error:  Command failed while removing existing files:  {0}\n".format(cmd))
+        sys.stderr.write(out)
+        sys.stderr.write(err)
+        sys.exit(-1)
+
+if cleanFlag:
+    cmd = "rm -f exome_calls.vcf* exome_metrics.txt rawcalls*.vcf*"
+    runcmd(cmd)
+    for record in fileInfoSheetData:
+        sample = record[1]
+        cmd = "rm -rf {0}/.completed* {0}/{0}.ba[mi] {0}/{0}.g.vcf* {0}/exome*_{0}.txt {0}/gatkExome_working".format(sample)
+        runcmd(cmd)
+
+# If there are fewer than 10 exomes, perform hard filtering
+if len(sampleCounts.keys()) < 10 and filterMode == "recalibration":
+    filterMode = "hard-filter"
+
+# Write the values as parameters to RMS
+if nodes:
+   sys.stdout.write('##option="-n %s"\n' % nodes)
+
+sys.stdout.write("##genome=( %s )\n" % genome)
+sys.stdout.write("##callmode=( %s )\n" % callMode)
+sys.stdout.write("##filtermode=( %s )\n" % filterMode)
+sys.stdout.write("##annotmode=( %s )\n" % annotMode)
+
+sys.stdout.write("##region=( 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 decoy )\n")
+sys.stdout.write("##regionNoDecoy=( 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 )\n")
+
+if genome == "hg19":
+   sys.stdout.write("##regionBySize=( decoy 4 1 2 8 24 3 25 6 26 23 21 11 5 9 27 10 15 14 20 28 35 29 34 7 12 22 13 17 18 31 16 36 30 19 33 32 )\n")
+else:
+   sys.stdout.write("##regionBySize=( decoy 4 10 8 1 2 24 25 6 26 3 14 23 11 5 35 27 21 20 15 22 28 29 12 18 17 31 13 34 16 7 30 36 33 9 19 32 )\n")
+
+##env
+
+source /home/bioinfo/software/knightlab/setup-lang.sh
+source /home/bioinfo/software/knightlab/lang/setup-java-1.8.0.sh
+
+alias pbm="source /home/bioinfo/software/knightlab/bin_Apr2019/pbmscript.sh"
+
+pbm bwa-0.7.15
+pbm samtools-1.8
+pbm picard-2.17.11
+pbm gatk-3.4
+pbm freebayes-1.1.0
+pbm quip
+pbm gatkutil
+pbm tabix
+pbm vcfAnnotate
+
+if [ "<genome>" == "hg19" ] ; then
+   pbm hs37d5
+else
+   pbm hs38DH
+fi
+
+REFROOT=`echo $REF | sed 's/\.fasta//'`
+##local=${REFROOT}.*
+
+REFBASE=`basename $REF`
+
+##local=${BUNDLE}/zipped/*
+
+#### setup sample <sample>/.completed.finalbam
+
+mkdir -p <sample>/gatkExome_working
+
+for reg in <region> ; do
+   mkdir -p <sample>/gatkExome_working/region_$reg
+done
+mkdir -p <sample>/gatkExome_working/splitPathDir
+
+#### splitFastq path <sample>/.completed.finalbam
+##ppn=10
+##local=3x<path>
+##io=1
+
+REALPWD=`realpath $PWD`
+R1PATH=$REALPWD/"<path>"
+R2PATH=`echo $R1PATH | sed 's/_R1_/_R2_/'`
+
+R1BASE=`basename "<path>"`
+if [ -e <sample>/gatkExome_working/.completed.$R1BASE.split ] ; then
+   exit 0
+fi
+
+if [ "1" == "<SplitCount>" ] ; then
+  R1SPLITPATH="<splitpath>"
+  if [ ${R1PATH: -3} == ".qp" ] ; then
+    R1SPLITPATH=`echo "$R1SPLITPATH" | sed 's/.fastq.gz/.fastq.qp/'`
+  fi
+  ln -Ls $R1PATH $REALPWD/<sample>/gatkExome_working/splitPathDir/$R1SPLITPATH
+
+  R2SPLITPATH=`echo "$R1SPLITPATH" | sed 's/_R1_/_R2_/'`
+  if [ -e $R2PATH ] ; then
+     ln -Ls $R2PATH $REALPWD/<sample>/gatkExome_working/splitPathDir/$R2SPLITPATH
+  fi
+else
+  splitFastq $R1PATH <sample>/gatkExome_working/splitPathDir/<splitPath,glob=True>
+fi
+
+touch <sample>/gatkExome_working/.completed.$R1BASE.split
+
+#### alignReads path,splitpath <sample>/.completed.<splitpath>.alignReads
+##ppn=20
+##local=6x<sample>/gatkExome_working/splitPathDir/<splitpath>
+##mem=20
+
+R1="<sample>"/gatkExome_working/splitPathDir/"<splitpath>"
+R2=`echo $R1 | sed 's/_R1_/_R2_/'`
+
+ZCAT=zcat
+if [ ${R1: -3} == ".qp" ] ; then
+  ZCAT="quip -d -c"
+fi
+
+LOCALR1=`basename $R1`
+LOCALR2=`basename $R2`
+
+if [ -e $R2 ] ; then
+   rmssync -L --bwlimit=50000 $R1 $R2 <tmp>
+
+   bwa mem -t <ppn> -Y -M -K 100000000 -R '@RG\tID:<sample>\tPL:ILLUMINA\tPU:<sample>\tSM:<sample>\tLB:<sample>-1' \
+      <local>/$REFBASE <($ZCAT <tmp>/$LOCALR1) <($ZCAT <tmp>/$LOCALR2) |
+      demuxalignRegions <tmp>/tmp_<splitpath> $SPLIT_REGIONS
+else
+   rmssync -L --bwlimit=50000 $R1 <tmp>
+
+   bwa mem -t <ppn> -Y -M -K 100000000 -R '@RG\tID:<sample>\tPL:ILLUMINA\tPU:<sample>\tSM:<sample>\tLB:<sample>-1' \
+      <local>/$REFBASE <($ZCAT <tmp>/$LOCALR1) |
+      demuxalignRegions <tmp>/tmp_<splitpath> $SPLIT_REGIONS
+fi
+
+( cd <tmp> ; rms -p demuxsort.rms <tmp> <tmp>/tmp_*.split.bam <tmp>/tmp_*.<regionBySize,glob=True>.bam )
+
+for reg in <region> ; do
+   rmssync --bwlimit=50000 <tmp>/tmp_<splitpath>.$reg.sorted.bam <sample>/gatkExome_working/region_$reg/tmp_<splitpath>.$reg.bam
+done
+rmssync --bwlimit=50000 <tmp>/tmp_<splitpath>.split.sorted.bam <sample>/gatkExome_working/tmp_<splitpath>.split.bam
+
+touch <sample>/.completed.<splitpath>.alignReads
+
+rm -f $R1 $R2
+
+#### markDupsSplit sample <sample>/.completed.split.markDuplicates
+##ppn=2
+##local=2x<sample>/gatkExome_working/tmp_<splitpath,glob=True,sep=",">.split.bam
+##io=12
+
+rmssync --bwlimit=50000 <sample>/gatkExome_working/tmp_<splitpath,glob=True>.split.bam <tmp>
+
+picard MarkDuplicates I=<tmp>/tmp_<splitpath,glob=True>.split.bam O=<tmp>/<sample>.dedup.split.bam \
+      M=<tmp>/markdups_<sample>.txt ASSUME_SORT_ORDER=coordinate MAX_RECORDS_IN_RAM=2000000 \
+      COMPRESSION_LEVEL=1 CREATE_INDEX=true VALIDATION_STRINGENCY=LENIENT PROGRAM_RECORD_ID=null
+
+rmssync -t --bwlimit=50000 <tmp>/<sample>.dedup.split.ba[mi] <sample>/gatkExome_working
+
+touch <sample>/.completed.split.markDuplicates
+
+rm -f <sample>/gatkExome_working/tmp_<splitpath,glob=True>.split.bam
+
+#### markDups sample,regionBySize <sample>/.completed.<regionBySize>.markDuplicates
+##after=alignReads
+##ppn=2
+##local=2x<sample>/gatkExome_working/region_<regionBySize>/tmp_<splitpath,glob=True,sep=",">.<regionBySize>.bam
+##io=12
+
+rmssync --bwlimit=50000 <sample>/gatkExome_working/region_<regionBySize>/tmp_<splitpath,glob=True>.<regionBySize>.bam <tmp>
+
+picard MarkDuplicates I=<tmp>/tmp_<splitpath,glob=True>.<regionBySize>.bam O=<tmp>/<sample>.dedupinit.<regionBySize>.bam \
+      M=<tmp>/markdups_<sample>.txt ASSUME_SORT_ORDER=coordinate MAX_RECORDS_IN_RAM=2000000 \
+      COMPRESSION_LEVEL=1 CREATE_INDEX=true VALIDATION_STRINGENCY=LENIENT PROGRAM_RECORD_ID=null
+
+rmssync -t --bwlimit=50000 <tmp>/<sample>.dedupinit.<regionBySize>.ba[mi] <sample>/gatkExome_working
+
+#### markDupsMerge sample,regionBySize <sample>/.completed.<regionBySize>.markDuplicates
+##after=markDupsSplit,markDups
+##ppn=2
+##local=2x<sample>/gatkExome_working/<sample>.dedupinit.<regionBySize>.bam
+##io=16
+
+rmssync -t --bwlimit=50000 <sample>/gatkExome_working/<sample>.dedupinit.<regionBySize>.ba[mi] <tmp>
+
+samtools view -hb -L $SPLIT_REGIONS.<regionBySize>.bed \
+   <sample>/gatkExome_working/<sample>.dedup.split.bam > <tmp>/<sample>.dedup.split.bam
+
+samtools merge -c -p -@ <ppn> <tmp>/<sample>.dedup.<regionBySize>.bam \
+   <tmp>/<sample>.dedupinit.<regionBySize>.bam <tmp>/<sample>.dedup.split.bam
+
+samtools index <tmp>/<sample>.dedup.<regionBySize>.bam <tmp>/<sample>.dedup.<regionBySize>.bai
+
+rmssync -t --bwlimit=50000 <tmp>/<sample>.dedup.<regionBySize>.ba[mi] <sample>/gatkExome_working
+
+touch <sample>/.completed.<regionBySize>.markDuplicates
+
+rm -f <sample>/gatkExome_working/region_<regionBySize>/tmp_<splitpath,glob=True>.<regionBySize>.bam
+rm -f <sample>/gatkExome_working/<sample>.dedupinit.<regionBySize>.ba[mi]
+
+#### indelRealign sample,regionBySize <sample>/.completed.indelRealign
+##ppn=2
+##mem=16
+##io=16
+
+if [ "<regionBySize>" == "decoy" ] ; then
+   cp <sample>/gatkExome_working/<sample>.dedup.<regionBySize>.bam <sample>/gatkExome_working/<sample>.realign.<regionBySize>.bam
+   cp <sample>/gatkExome_working/<sample>.dedup.<regionBySize>.bai <sample>/gatkExome_working/<sample>.realign.<regionBySize>.bai
+   exit 0
+fi
+
+if [ "<genome>" == "hg19" ] ; then
+   KNOWNOPT="-known <local>/1000G_phase1.indels.b37.vcf.gz -known <local>/Mills_and_1000G_gold_standard.indels.b37.vcf.gz"
+else
+   KNOWNOPT="-known <local>/1000G_phase1.indels.hg38.vcf.gz -known <local>/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
+fi
+
+rmssync -t --bwlimit=50000 <sample>/gatkExome_working/<sample>.dedup.<regionBySize>.ba[mi] <tmp>
+
+gatk -T RealignerTargetCreator -R <local>/$REFBASE -I <tmp>/<sample>.dedup.<regionBySize>.bam \
+   -o <tmp>/<sample>.realign.intervals $KNOWNOPT --disable_auto_index_creation_and_locking_when_reading_rods \
+   -L $SPLIT_TARGETS.<regionBySize>.bed # -nt 8
+
+gatk -T IndelRealigner -R <local>/$REFBASE -I <tmp>/<sample>.dedup.<regionBySize>.bam $KNOWNOPT \
+   -targetIntervals <tmp>/<sample>.realign.intervals --disable_auto_index_creation_and_locking_when_reading_rods \
+   -o <tmp>/<sample>.realign.<regionBySize>.bam
+
+rmssync -t --bwlimit=50000 <tmp>/<sample>.realign.<regionBySize>.ba[mi] <sample>/gatkExome_working
+
+#### finishIndelRealign sample <sample>/.completed.indelRealign
+
+rm -f <sample>/gatkExome_working/<sample>.dedup.<region,glob=True>.ba[mi]
+
+touch <sample>/.completed.indelRealign
+
+#### baseRecalibrator sample <sample>/.completed.baseQualityRecal
+##after=indelRealign
+##ppn=2
+##mem=16
+##io=6
+
+# Cannot use the tmp directory for this, because it must access the whole sample's worth of data, not just a chromosome.
+
+if [ "<genome>" == "hg19" ] ; then
+   KNOWNOPT="-knownSites <local>/dbsnp_138.b37.vcf.gz -knownSites <local>/1000G_phase1.snps.high_confidence.b37.vcf.gz -knownSites <local>/Mills_and_1000G_gold_standard.indels.b37.vcf.gz"
+else
+   KNOWNOPT="-knownSites <local>/dbsnp_138.hg38.vcf.gz -knownSites <local>/1000G_phase1.snps.high_confidence.hg38.vcf.gz -knownSites <local>/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
+fi
+
+# changed/removed options "-dfrac .1"  (exome calibration should use all of the data)
+gatk -T BaseRecalibrator -R <local>/$REFBASE \
+   <sample>/gatkExome_working/<sample>.realign.<regionNoDecoy,glob=True,prefix="-I ">.bam \
+   $KNOWNOPT --disable_auto_index_creation_and_locking_when_reading_rods \
+   -o <sample>/gatkExome_working/<sample>.recal.table \
+   -L $TARGETS # -nct 20
+
+#### printReads sample,regionBySize <sample>/.completed.baseQualityRecal
+##ppn=2
+##mem=16
+##io=8
+
+rmssync -t --bwlimit=50000 <sample>/gatkExome_working/<sample>.realign.<regionBySize>.ba[mi] <tmp>
+
+gatk -T PrintReads -R <local>/$REFBASE -I <tmp>/<sample>.realign.<regionBySize>.bam \
+   -o <tmp>/<sample>.recal.<regionBySize>.bam \
+   -BQSR <sample>/gatkExome_working/<sample>.recal.table --disable_indel_quals # -nct 8
+
+rmssync -t --bwlimit=50000 <tmp>/<sample>.recal.<regionBySize>.ba[mi] <sample>/gatkExome_working
+
+#### finishBaseRecal sample <sample>/.completed.baseQualityRecal
+
+rm -f <sample>/gatkExome_working/<sample>.realign.<regionNoDecoy,glob=True>.ba[mi]
+
+touch <sample>/.completed.baseQualityRecal
+
+#### haplotypeCaller sample,regionBySize <sample>/.completed.haplotypeCaller
+##ppn=1
+##mem=16
+##local=4x<sample>/gatkExome_working/<sample>.recal.<regionBySize>.bam
+
+if [ "<regionBySize>" == "decoy" ] ; then
+   exit 0
+fi
+
+rmssync -t --bwlimit=50000 <sample>/gatkExome_working/<sample>.recal.<regionBySize>.ba[mi] <tmp>
+
+gatk -T HaplotypeCaller -R <local>/$REFBASE -I <tmp>/<sample>.recal.<regionBySize>.bam \
+   -o <tmp>/<sample>_gatk.<regionBySize>.g.vcf.gz -ERC BP_RESOLUTION -mmq 10 -L $SPLIT_TARGETS.<regionBySize>.bed
+
+rmssync -t --bwlimit=50000 <tmp>/<sample>_gatk.<regionBySize>.g.vcf.gz* <sample>/gatkExome_working
+
+#### freebayes sample,regionBySize <sample>/.completed.haplotypeCaller
+##after=finishBaseRecal
+##ppn=1
+##local=4x<sample>/gatkExome_working/<sample>.recal.<regionBySize>.bam
+
+if [ "<regionBySize>" == "decoy" ] ; then
+   exit 0
+fi
+
+rmssync -t --bwlimit=50000 <sample>/gatkExome_working/<sample>.recal.<regionBySize>.ba[mi] <tmp>
+
+fbcall <local>/$REFBASE $SPLIT_TARGETS.<regionBySize>.bed <tmp>/<sample>.recal.<regionBySize>.bam \
+   <tmp>/<sample>_freebayes_calls.<regionBySize>.vcf
+
+rmssync -t --bwlimit=50000 <tmp>/<sample>_freebayes_calls.<regionBySize>.vcf <sample>/gatkExome_working
+
+#### fixGVCF sample,regionBySize <sample>/.completed.haplotypeCaller
+##after=haplotypeCaller,freebayes
+#local=4x<sample>/gatkExome_working/<sample>_gatk.<regionBySize>.g.vcf.gz
+
+if [ "<regionBySize>" == "decoy" ] ; then
+   exit 0
+fi
+
+rmssync -t --bwlimit=50000 <sample>/gatkExome_working/<sample>_gatk.<regionBySize>.g.vcf.gz <sample>/gatkExome_working/<sample>_freebayes_calls.<regionBySize>.vcf <tmp>
+
+fixgvcf.py <tmp>/<sample>_freebayes_calls.<regionBySize>.vcf <tmp>/<sample>_gatk.<regionBySize>.g.vcf.gz | \
+  bgzip -c > <tmp>/<sample>.<regionBySize>.g.vcf.gz
+
+tabix <tmp>/<sample>.<regionBySize>.g.vcf.gz
+
+rmssync -t --bwlimit=50000 <tmp>/<sample>.<regionBySize>.g.vcf.gz* <sample>
+
+#### mergeGVCF sample <sample>/.completed.haplotypeCaller
+##ppn=4
+##mem=12
+##io=4
+
+bcftools concat --threads 6 -o <sample>/<sample>.g.vcf.gz -O z <sample>/<sample>.<regionNoDecoy,glob=True>.g.vcf.gz
+tabix <sample>/<sample>.g.vcf.gz
+
+rm -f <sample>/<sample>.<regionNoDecoy,glob=True>.g.vcf*
+
+touch <sample>/.completed.haplotypeCaller
+
+#### mergeFinalBam sample <sample>/.completed.finalbam
+##after=finishBaseRecal
+##ppn=4
+##io=2
+
+samtools cat <sample>/gatkExome_working/<sample>.recal.<region,glob=True>.bam > <sample>/<sample>.bam
+samtools index <sample>/<sample>.bam <sample>/<sample>.bai
+
+#### completeFinalBam sample <sample>/.completed.finalbam
+##after=mergeGVCF,mergeFinalBam
+
+rm -rf <sample>/gatkExome_working
+
+touch <sample>/.completed.finalbam
+
+#### exomeMetrics sample <sample>/exomeMetrics_<sample>.txt
+##after=mergeFinalBam
+##ppn=4
+##io=4
+
+WHICHOPT="-38"
+if [ "<genome>" == "hg19" ] ; then
+   WHICHOPT=""
+fi
+KIT=`whichexome.py $WHICHOPT <sample>/<sample>.bam | cut -f1`
+if [ $KIT == "IDT" ] ; then
+   BED=$IDT_TARGET_REGIONS
+elif [ $KIT == "MedExome" ] ; then
+   BED=$MEDEXOME_TARGET_REGIONS
+elif [ $KIT == "V2" ] ; then
+   BED=$V2_TARGET_REGIONS
+else
+   BED=$CODING_REGIONS
+   KIT=Coding
+fi
+
+bamMetrics -t 4 -r <local>/$REFBASE -b $BED -c <sample>/exomeTRcov_<sample>.txt <sample>/<sample>.bam > <sample>/exomeMetrics_<sample>.txt
+
+echo -e "Targets:\t$KIT" >> <sample>/exomeMetrics_<sample>.txt
+
+#### mergeMetrics all exome_metrics.txt
+
+statsmerge.py <sample,glob=True>/exomeMetrics_*.txt > exome_metrics.txt
+
+#### GenotypeGVCF regionBySize rawcalls.vcf.gz
+##after=mergeGVCF
+##ppn=2
+##mem=40
+
+if [ "<callmode>" != "joint" ] ; then
+   exit 0
+fi
+
+if [ "<regionBySize>" == "decoy" ] ; then
+   exit 0
+fi
+
+for sample in <sample>; do
+   if [ -e ${sample}/${sample}.g.vcf.gz ] ; then
+      echo ${sample}/${sample}.g.vcf.gz >> <tmp>/rawcalls.<regionBySize>.gvcf.list
+   else
+      echo ${sample}/${sample}.g.vcf >> <tmp>/rawcalls.<regionBySize>.gvcf.list
+   fi
+done
+
+java -Xmx35g -XX:ParallelGCThreads=4 -jar $GATKJAR -T GenotypeGVCFs \
+   -R <local>/$REFBASE -V <tmp>/rawcalls.<regionBySize>.gvcf.list \
+   -o <tmp>/rawcalls.<regionBySize>.vcf.gz -L $SPLIT_TARGETS.<regionBySize>.bed \
+   -stand_emit_conf 10 --disable_auto_index_creation_and_locking_when_reading_rods
+
+rmssync -t --bwlimit=50000 <tmp>/rawcalls.<regionBySize>.vcf* .
+
+#### mergeVCF all rawcalls.vcf.gz
+##ppn=4
+
+if [ "<callmode>" != "joint" ] ; then
+   exit 0
+fi
+
+bcftools concat --threads 6 -o <tmp>/rawcalls.vcf.gz -O z rawcalls.<regionNoDecoy,glob=True>.vcf.gz
+tabix <tmp>/rawcalls.vcf.gz
+
+rmssync -t --bwlimit=50000 <tmp>/rawcalls.vcf.gz* .
+
+rm -f rawcalls.<regionNoDecoy,glob=True>.vcf*
+
+#### HardFiltering all exome_calls.vcf.gz
+##mem=16
+
+if [ "<callmode>" != "joint" ] ; then
+   exit 0
+fi
+
+if [ "<filtermode>" != "hard-filter" ] ; then
+  exit 0
+fi
+
+gatk -T SelectVariants -R <local>/$REFBASE -V rawcalls.vcf.gz -selectType SNP -o <tmp>/raw_snps.vcf
+gatk -T VariantFiltration -R <local>/$REFBASE -V <tmp>/raw_snps.vcf -o <tmp>/filtered_snps.vcf --filterName "HardFilter" \
+   --filterExpression "DP < 4 || QD < 2.0 || FS > 60.0 || MQ < 35.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0"
+
+gatk -T SelectVariants -R <local>/$REFBASE -V rawcalls.vcf.gz -selectType INDEL -o <tmp>/raw_indels.vcf
+gatk -T VariantFiltration -R <local>/$REFBASE -V <tmp>/raw_indels.vcf -o <tmp>/filtered_indels.vcf --filterName "HardFilter" \
+   --filterExpression "DP < 4 || QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0 || MQ < 35.0"
+
+gatk -T SelectVariants -R <local>/$REFBASE -V rawcalls.vcf.gz -selectType MIXED -o <tmp>/raw_mixed.vcf
+gatk -T VariantFiltration -R <local>/$REFBASE -V <tmp>/raw_mixed.vcf -o <tmp>/filtered_mixed.vcf --filterName "HardFilter" \
+   --filterExpression "DP < 4 || QD < 2.0 || FS > 60.0 || MQ < 35.0"
+
+gatk -T CombineVariants -R <local>/$REFBASE -V <tmp>/filtered_snps.vcf -V <tmp>/filtered_indels.vcf -V <tmp>/filtered_mixed.vcf \
+   -o <tmp>/final_calls.vcf --assumeIdenticalSamples
+
+gatkLowQualityFilter.py <local>/$REFBASE <tmp>/final_calls.vcf > <tmp>/exome_calls.vcf
+bgzip <tmp>/exome_calls.vcf
+tabix <tmp>/exome_calls.vcf.gz
+
+rmssync -t --bwlimit=50000 <tmp>/exome_calls.vcf.gz* .
+
+#### VariantRecal all exome_calls.vcf.gz
+##local=16
+
+if [ "<callmode>" != "joint" ] ; then
+   exit 0
+fi
+
+if [ "<filtermode>" != "recalibration" ] ; then
+   exit 0
+fi
+
+rmssync -t --bwlimit=50000 rawcalls.vcf.gz* <tmp>
+
+if [ "<genome>" == "hg19" ] ; then
+    SNPOPT="--resource:hapmap,known=false,training=true,truth=true,prior=15.0 <local>/hapmap_3.3.b37.vcf.gz --resource:omni,known=false,training=true,truth=true,prior=12.0 <local>/1000G_omni2.5.b37.vcf.gz --resource:1000G,known=false,training=true,truth=false,prior=10.0 <local>/1000G_phase1.snps.high_confidence.b37.vcf.gz --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 <local>/dbsnp_138.b37.vcf.gz"
+else
+    SNPOPT="--resource:hapmap,known=false,training=true,truth=true,prior=15.0 <local>/hapmap_3.3.hg38.vcf.gz --resource:omni,known=false,training=true,truth=true,prior=12.0 <local>/1000G_omni2.5.hg38.vcf.gz --resource:1000G,known=false,training=true,truth=false,prior=10.0 <local>/1000G_phase1.snps.high_confidence.hg38.vcf.gz --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 <local>/dbsnp_138.hg38.vcf.gz"
+fi
+
+gatk -T VariantRecalibrator -R <local>/$REFBASE --input <tmp>/rawcalls.vcf.gz -recalFile <tmp>/raw.SNPs.recal \
+   -tranchesFile <tmp>/raw.SNPs.tranches $SNPOPT \
+   -an QD -an MQRankSum -an ReadPosRankSum -an FS -an SOR -an DP \
+   --mode SNP
+
+gatk -T ApplyRecalibration -R <local>/$REFBASE --input <tmp>/rawcalls.vcf.gz -recalFile <tmp>/raw.SNPs.recal \
+   -tranchesFile <tmp>/raw.SNPs.tranches \
+   -o <tmp>/recal.SNPs.vcf.gz --ts_filter_level 99.5 \
+   --mode SNP
+
+if [ "<genome>" == "hg19" ] ; then
+    INDELOPT="--resource:mills,known=false,training=true,truth=true,prior=12.0 <local>/Mills_and_1000G_gold_standard.indels.b37.vcf.gz --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 <local>/dbsnp_138.b37.vcf.gz"
+else
+    INDELOPT="--resource:mills,known=false,training=true,truth=true,prior=12.0 <local>/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 <local>/dbsnp_138.hg38.vcf.gz"
+fi
+
+gatk -T VariantRecalibrator -R <local>/$REFBASE --input <tmp>/recal.SNPs.vcf.gz -recalFile <tmp>/raw.Indels.recal \
+   -tranchesFile <tmp>/raw.Indels.tranches $INDELOPT \
+   -an QD -an DP -an FS -an SOR -an MQRankSum -an ReadPosRankSum \
+   --maxGaussians 4 \
+   --mode INDEL
+
+gatk -T ApplyRecalibration -R <local>/$REFBASE --input <tmp>/recal.SNPs.vcf.gz -recalFile <tmp>/raw.Indels.recal \
+   -tranchesFile <tmp>/raw.Indels.tranches \
+   -o <tmp>/final_calls.vcf.gz --ts_filter_level 99.0 \
+   --mode INDEL
+
+gatkLowQualityFilter.py <local>/$REFBASE <tmp>/final_calls.vcf.gz | bgzip -c > <tmp>/exome_calls.vcf.gz
+tabix <tmp>/exome_calls.vcf.gz
+
+rmssync -t --bwlimit=50000 <tmp>/exome_calls.vcf.gz* .
+
+#### Annotation all exome_calls_anno.coding.xls
+##ppn=2
+##io=10
+
+if [ "<annotmode>" != "True" ] ; then
+   exit 0
+fi
+
+if [ "<callmode>" != "joint" ] ; then
+   exit 0
+fi
+
+if [ "<genome>" == "hg19" ] ; then
+   OPT="-19"
+else
+   OPT="-38"
+fi
+
+vcfAnnotate $OPT exome_calls.vcf.gz
+
+#### GenotypeGVCFPerSample sample <sample>/<sample>_rawcalls.vcf
+##after=mergeGVCF
+##ppn=8
+##mem=20
+
+if [ "<callmode>" != "per-sample" ] ; then
+   exit 0
+fi
+
+java -Xmx20g -XX:ParallelGCThreads=4 -jar $GATKJAR -T GenotypeGVCFs \
+   -R <local>/$REFBASE -V <sample>/<sample>.g.vcf.gz \
+   -o <tmp>/<sample>_rawcalls.vcf -nt 8 \
+   --disable_auto_index_creation_and_locking_when_reading_rods 
+
+rmssync -t --bwlimit=50000 <tmp>/<sample>_rawcalls.vcf* <sample>
+
+#### HardFilteringPerSample sample <sample>/<sample>_calls.vcf
+##mem=16
+
+if [ "<callmode>" != "per-sample" ] ; then
+   exit 0
+fi
+
+cd <sample>
+
+gatk -T SelectVariants -R <local>/$REFBASE -V <sample>_rawcalls.vcf -selectType SNP -o <tmp>/raw_snps.vcf
+gatk -T VariantFiltration -R <local>/$REFBASE -V <tmp>/raw_snps.vcf -o <tmp>/filtered_snps.vcf --filterName "HardFilter" \
+   --filterExpression "DP < 4 || QD < 2.0 || FS > 60.0 || MQ < 35.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0"
+
+gatk -T SelectVariants -R <local>/$REFBASE -V <sample>_rawcalls.vcf -selectType INDEL -o <tmp>/raw_indels.vcf
+gatk -T VariantFiltration -R <local>/$REFBASE -V <tmp>/raw_indels.vcf -o <tmp>/filtered_indels.vcf --filterName "HardFilter" \
+   --filterExpression "DP < 4 || QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0 || MQ < 35.0"
+
+gatk -T SelectVariants -R <local>/$REFBASE -V <sample>_rawcalls.vcf -selectType MIXED -o <tmp>/raw_mixed.vcf
+gatk -T VariantFiltration -R <local>/$REFBASE -V <tmp>/raw_mixed.vcf -o <tmp>/filtered_mixed.vcf --filterName "HardFilter" \
+   --filterExpression "DP < 4 || QD < 2.0 || FS > 60.0 || MQ < 35.0"
+
+gatk -T CombineVariants -R <local>/$REFBASE -V <tmp>/filtered_snps.vcf -V <tmp>/filtered_indels.vcf -V <tmp>/filtered_mixed.vcf \
+   -o <tmp>/<sample>_calls.vcf --assumeIdenticalSamples
+
+gatkLowQualityFilter.py <local>/$REFBASE <tmp>/<sample>_calls.vcf > <sample>_calls.vcf
+
+#### AnnotationPerSample sample <sample>/<sample>_calls_anno.coding.xls
+##ppn=2
+##io=10
+
+if [ "<annotmode>" != "True" ] ; then
+   exit 0
+fi
+
+if [ "<callmode>" != "per-sample" ] ; then
+   exit 0
+fi
+
+if [ "<genome>" == "hg19" ] ; then
+   OPT="-19"
+else
+   OPT="-38"
+fi
+
+vcfAnnotate $OPT <sample>/<sample>_calls.vcf
+

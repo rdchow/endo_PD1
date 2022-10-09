@@ -1,0 +1,115 @@
+Cluster	cellType	group	Pathway	nlp	GeneRatio
+CD16-NK:LR:Cell adhesion molecules	CD16-NK	LR	Cell adhesion molecules	-1.25119020671502	-0.157894736842105
+CD16-NK:LR:Oxidative phosphorylation	CD16-NK	LR	Oxidative phosphorylation	1.31898467731618	0.142857142857143
+CD16-NK:LR:Phagosome	CD16-NK	LR	Phagosome	-1.25119020671502	-0.157894736842105
+CD16-NK:LR:Ribosome	CD16-NK	LR	Ribosome	7.06086598722113	0.380952380952381
+CD16-NK:LR:T cell receptor signaling pathway	CD16-NK	LR	T cell receptor signaling pathway	-0.895767271853432	-0.105263157894737
+CD16-NK:NLR:Antigen processing and presentation	CD16-NK	NLR	Antigen processing and presentation	0.955514797555764	0.0625
+CD16-NK:NLR:Focal adhesion	CD16-NK	NLR	Focal adhesion	2.47507626613855	0.1875
+CD16-NK:NLR:Glycolysis / Gluconeogenesis	CD16-NK	NLR	Glycolysis / Gluconeogenesis	1.01472467582097	0.0625
+CD16-NK:NLR:Leukocyte transendothelial migration	CD16-NK	NLR	Leukocyte transendothelial migration	1.90643200773815	0.125
+CD16-NK:NLR:Oxytocin signaling pathway	CD16-NK	NLR	Oxytocin signaling pathway	1.06780326848039	0.09375
+CD16-NK:NLR:Phagosome	CD16-NK	NLR	Phagosome	2.21296837416481	0.15625
+CD16-NK:NLR:Regulation of actin cytoskeleton	CD16-NK	NLR	Regulation of actin cytoskeleton	1.79332719477271	0.15625
+CD16-NK:NLR:Ribosome	CD16-NK	NLR	Ribosome	2.21296837416481	0.15625
+CD16-NK:NLR:Tight junction	CD16-NK	NLR	Tight junction	2.47507626613855	0.1875
+CD16-NK:NR:Antigen processing and presentation	CD16-NK	NR	Antigen processing and presentation	2.16427054780062	0.15
+CD16-NK:NR:Cell adhesion molecules	CD16-NK	NR	Cell adhesion molecules	0.996831541794589	0.1
+CD16-NK:NR:Endocytosis	CD16-NK	NR	Endocytosis	0.759545180574024	0.1
+CD16-NK:NR:Phagosome	CD16-NK	NR	Phagosome	0.996831541794589	0.1
+CD16-NK:NR:Ribosome	CD16-NK	NR	Ribosome	-6.73210447569181	-0.363636363636364
+CD4-Activated:LR:Focal adhesion	CD4-Activated	LR	Focal adhesion	-0.733636351448881	-0.0967741935483871
+CD4-Activated:LR:Leukocyte transendothelial migration	CD4-Activated	LR	Leukocyte transendothelial migration	-0.832778898196574	-0.0967741935483871
+CD4-Activated:LR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Activated	LR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-0.733636351448881	-0.0645161290322581
+CD4-Activated:LR:Regulation of actin cytoskeleton	CD4-Activated	LR	Regulation of actin cytoskeleton	-0.832778898196574	-0.129032258064516
+CD4-Activated:LR:Ribosome	CD4-Activated	LR	Ribosome	2.83022837401412	0.227272727272727
+CD4-Activated:LR:mRNA surveillance pathway	CD4-Activated	LR	mRNA surveillance pathway	2.65453690442835	0.181818181818182
+CD4-Activated:NLR:Antigen processing and presentation	CD4-Activated	NLR	Antigen processing and presentation	2.57473882680525	0.0714285714285714
+CD4-Activated:NLR:Cell adhesion molecules	CD4-Activated	NLR	Cell adhesion molecules	1.14519489836319	0.0612244897959184
+CD4-Activated:NLR:Cellular senescence	CD4-Activated	NLR	Cellular senescence	0.742594413659868	0.0510204081632653
+CD4-Activated:NLR:Focal adhesion	CD4-Activated	NLR	Focal adhesion	-0.867950606149972	-0.0625
+CD4-Activated:NLR:Glycolysis / Gluconeogenesis	CD4-Activated	NLR	Glycolysis / Gluconeogenesis	0.707295363710416	0.0306122448979592
+CD4-Activated:NLR:Oxidative phosphorylation	CD4-Activated	NLR	Oxidative phosphorylation	-7.5884297548677	-0.125
+CD4-Activated:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Activated	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	1.36351237529144	0.0510204081632653
+CD4-Activated:NLR:Phagosome	CD4-Activated	NLR	Phagosome	2.41538005362052	0.0918367346938776
+CD4-Activated:NLR:Protein export	CD4-Activated	NLR	Protein export	-1.21907927088104	-0.0234375
+CD4-Activated:NLR:Protein processing in endoplasmic reticulum	CD4-Activated	NLR	Protein processing in endoplasmic reticulum	1.75308455480644	0.0816326530612245
+CD4-Activated:NLR:Ribosome	CD4-Activated	NLR	Ribosome	-8.10300503654235	-0.140625
+CD4-Activated:NLR:T cell receptor signaling pathway	CD4-Activated	NLR	T cell receptor signaling pathway	1.6930293715205	0.0612244897959184
+CD4-Activated:NLR:Tight junction	CD4-Activated	NLR	Tight junction	0.707295363710416	0.0510204081632653
+CD4-Activated:NR:Cellular senescence	CD4-Activated	NR	Cellular senescence	-0.845351379126823	-0.0588235294117647
+CD4-Activated:NR:Leukocyte transendothelial migration	CD4-Activated	NR	Leukocyte transendothelial migration	-0.71548424792299	-0.0441176470588235
+CD4-Activated:NR:Oxidative phosphorylation	CD4-Activated	NR	Oxidative phosphorylation	-1.3933407190235	-0.0735294117647059
+CD4-Activated:NR:Oxytocin signaling pathway	CD4-Activated	NR	Oxytocin signaling pathway	-0.845351379126823	-0.0588235294117647
+CD4-Activated:NR:Protein export	CD4-Activated	NR	Protein export	-1.08147944532167	-0.0294117647058824
+CD4-Activated:NR:Protein processing in endoplasmic reticulum	CD4-Activated	NR	Protein processing in endoplasmic reticulum	-6.75751375589406	-0.191176470588235
+CD4-Activated:NR:Regulation of actin cytoskeleton	CD4-Activated	NR	Regulation of actin cytoskeleton	-0.845807757637327	-0.0735294117647059
+CD4-Activated:NR:Ribosome	CD4-Activated	NR	Ribosome	-1.23348707456938	-0.0735294117647059
+CD4-Activated:NR:mRNA surveillance pathway	CD4-Activated	NR	mRNA surveillance pathway	2.16890936961326	0.105263157894737
+CD4-Naive:LR:Glycolysis / Gluconeogenesis	CD4-Naive	LR	Glycolysis / Gluconeogenesis	-1.36222002623698	-0.0677966101694915
+CD4-Naive:LR:Leukocyte transendothelial migration	CD4-Naive	LR	Leukocyte transendothelial migration	-0.820107471511334	-0.0677966101694915
+CD4-Naive:LR:Regulation of actin cytoskeleton	CD4-Naive	LR	Regulation of actin cytoskeleton	-1.42306446243709	-0.11864406779661
+CD4-Naive:LR:Ribosome	CD4-Naive	LR	Ribosome	2.02812536563403	0.161290322580645
+CD4-Naive:LR:Tight junction	CD4-Naive	LR	Tight junction	-0.820107471511334	-0.0847457627118644
+CD4-Naive:NLR:Antigen processing and presentation	CD4-Naive	NLR	Antigen processing and presentation	8.23943083551004	0.157142857142857
+CD4-Naive:NLR:Cell adhesion molecules	CD4-Naive	NLR	Cell adhesion molecules	1.92000823183503	0.0857142857142857
+CD4-Naive:NLR:Cellular senescence	CD4-Naive	NLR	Cellular senescence	0.943199720026688	0.0571428571428571
+CD4-Naive:NLR:Endocytosis	CD4-Naive	NLR	Endocytosis	2.43701862387509	0.128571428571429
+CD4-Naive:NLR:Focal adhesion	CD4-Naive	NLR	Focal adhesion	1.07848991607	0.0714285714285714
+CD4-Naive:NLR:Glutamatergic synapse	CD4-Naive	NLR	Glutamatergic synapse	-0.972614081947994	-0.0588235294117647
+CD4-Naive:NLR:Glycolysis / Gluconeogenesis	CD4-Naive	NLR	Glycolysis / Gluconeogenesis	1.82255723595149	0.0571428571428571
+CD4-Naive:NLR:Leukocyte transendothelial migration	CD4-Naive	NLR	Leukocyte transendothelial migration	0.817129647393733	0.0428571428571429
+CD4-Naive:NLR:Oxidative phosphorylation	CD4-Naive	NLR	Oxidative phosphorylation	-7.42045534157983	-0.176470588235294
+CD4-Naive:NLR:Oxytocin signaling pathway	CD4-Naive	NLR	Oxytocin signaling pathway	1.88510377293695	0.0857142857142857
+CD4-Naive:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Naive	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	0.965830292724175	0.0428571428571429
+CD4-Naive:NLR:Phagosome	CD4-Naive	NLR	Phagosome	3.48923917860352	0.128571428571429
+CD4-Naive:NLR:Protein export	CD4-Naive	NLR	Protein export	2.06638650523345	0.0428571428571429
+CD4-Naive:NLR:Protein processing in endoplasmic reticulum	CD4-Naive	NLR	Protein processing in endoplasmic reticulum	2.21285390033591	0.1
+CD4-Naive:NLR:Ribosome	CD4-Naive	NLR	Ribosome	-7.45338708114012	-0.191176470588235
+CD4-Naive:NLR:T cell receptor signaling pathway	CD4-Naive	NLR	T cell receptor signaling pathway	1.29124656556456	0.0571428571428571
+CD4-Naive:NLR:Tight junction	CD4-Naive	NLR	Tight junction	1.21446614716444	0.0714285714285714
+CD4-Naive:NR:Ribosome	CD4-Naive	NR	Ribosome	-21.2432925756013	-0.4
+CD56-NK:LR:Cytosolic DNA-sensing pathway	CD56-NK	LR	Cytosolic DNA-sensing pathway	1.49681739265357	0.222222222222222
+CD56-NK:LR:Ribosome	CD56-NK	LR	Ribosome	9.12397568102428	0.777777777777778
+CD56-NK:NLR:Focal adhesion	CD56-NK	NLR	Focal adhesion	1.0464056372684	0.25
+CD56-NK:NLR:Leukocyte transendothelial migration	CD56-NK	NLR	Leukocyte transendothelial migration	1.0464056372684	0.25
+CD56-NK:NLR:Oxidative phosphorylation	CD56-NK	NLR	Oxidative phosphorylation	-1.46540331125399	-0.222222222222222
+CD56-NK:NLR:Oxytocin signaling pathway	CD56-NK	NLR	Oxytocin signaling pathway	1.0464056372684	0.25
+CD56-NK:NLR:Phagosome	CD56-NK	NLR	Phagosome	1.0464056372684	0.25
+CD56-NK:NLR:Regulation of actin cytoskeleton	CD56-NK	NLR	Regulation of actin cytoskeleton	1.0464056372684	0.25
+CD56-NK:NLR:Ribosome	CD56-NK	NLR	Ribosome	-5.22917434607405	-0.555555555555556
+CD56-NK:NLR:Tight junction	CD56-NK	NLR	Tight junction	1.0464056372684	0.25
+CD56-NK:NR:Ribosome	CD56-NK	NR	Ribosome	1.70368359523044	0.5
+CD8-Activated:LR:Ribosome	CD8-Activated	LR	Ribosome	2.16796734903699	0.157894736842105
+CD8-Activated:NLR:Antigen processing and presentation	CD8-Activated	NLR	Antigen processing and presentation	2.50353417410171	0.0542635658914729
+CD8-Activated:NLR:Cellular senescence	CD8-Activated	NLR	Cellular senescence	0.700079840339909	0.0387596899224806
+CD8-Activated:NLR:GABAergic synapse	CD8-Activated	NLR	GABAergic synapse	-1.4712083480166	-0.0847457627118644
+CD8-Activated:NLR:Glutamatergic synapse	CD8-Activated	NLR	Glutamatergic synapse	-2.5942455719121	-0.11864406779661
+CD8-Activated:NLR:Glycolysis / Gluconeogenesis	CD8-Activated	NLR	Glycolysis / Gluconeogenesis	2.83612585532339	0.0542635658914729
+CD8-Activated:NLR:Oxytocin signaling pathway	CD8-Activated	NLR	Oxytocin signaling pathway	0.702865586739972	0.0387596899224806
+CD8-Activated:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD8-Activated	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	2.33899855995157	0.0542635658914729
+CD8-Activated:NLR:Phagosome	CD8-Activated	NLR	Phagosome	1.36236000006808	0.0542635658914729
+CD8-Activated:NLR:Protein processing in endoplasmic reticulum	CD8-Activated	NLR	Protein processing in endoplasmic reticulum	0.837607121100739	0.0465116279069767
+CD8-Activated:NLR:Ribosome	CD8-Activated	NLR	Ribosome	25.668501635312	0.255813953488372
+CD8-Activated:NLR:T cell receptor signaling pathway	CD8-Activated	NLR	T cell receptor signaling pathway	3.084059441001	0.0697674418604651
+CD8-Activated:NLR:Tight junction	CD8-Activated	NLR	Tight junction	1.16327472390562	0.0542635658914729
+CD8-Activated:NR:Ribosome	CD8-Activated	NR	Ribosome	-27.2273587195395	-0.480769230769231
+CD8-Naive:LR:Cellular senescence	CD8-Naive	LR	Cellular senescence	-0.743545818906048	-0.181818181818182
+CD8-Naive:LR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD8-Naive	LR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-0.69917000474103	-0.0909090909090909
+CD8-Naive:LR:Ribosome	CD8-Naive	LR	Ribosome	12.1702870870776	0.625
+CD8-Naive:LR:T cell receptor signaling pathway	CD8-Naive	LR	T cell receptor signaling pathway	-0.69917000474103	-0.0909090909090909
+CD8-Naive:NLR:Antigen processing and presentation	CD8-Naive	NLR	Antigen processing and presentation	1.06103723396783	0.0909090909090909
+CD8-Naive:NLR:Cell adhesion molecules	CD8-Naive	NLR	Cell adhesion molecules	0.909584828165006	0.0909090909090909
+CD8-Naive:NLR:Cellular senescence	CD8-Naive	NLR	Cellular senescence	1.57353590081964	0.181818181818182
+CD8-Naive:NLR:Endocytosis	CD8-Naive	NLR	Endocytosis	0.77226644837869	0.0909090909090909
+CD8-Naive:NLR:Focal adhesion	CD8-Naive	NLR	Focal adhesion	0.834026062012461	0.0909090909090909
+CD8-Naive:NLR:Oxidative phosphorylation	CD8-Naive	NLR	Oxidative phosphorylation	-3.9334057624677	-0.4
+CD8-Naive:NLR:Oxytocin signaling pathway	CD8-Naive	NLR	Oxytocin signaling pathway	1.70629301258703	0.272727272727273
+CD8-Naive:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD8-Naive	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	1.70629301258703	0.181818181818182
+CD8-Naive:NLR:Phagosome	CD8-Naive	NLR	Phagosome	0.907789747704147	0.0909090909090909
+CD8-Naive:NLR:Ribosome	CD8-Naive	NLR	Ribosome	-3.19866721107579	-0.3
+CD8-Naive:NLR:T cell receptor signaling pathway	CD8-Naive	NLR	T cell receptor signaling pathway	1.70629301258703	0.181818181818182
+CD8-Naive:NLR:Tight junction	CD8-Naive	NLR	Tight junction	0.883935208100722	0.0909090909090909
+CD8-Naive:NR:Cellular senescence	CD8-Naive	NR	Cellular senescence	-1.26921329101449	-0.25
+CD8-Naive:NR:Oxytocin signaling pathway	CD8-Naive	NR	Oxytocin signaling pathway	0.77094007754315	0.166666666666667
+CD8-Naive:NR:mRNA surveillance pathway	CD8-Naive	NR	mRNA surveillance pathway	0.77094007754315	0.166666666666667

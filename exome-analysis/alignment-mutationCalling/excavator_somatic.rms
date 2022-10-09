@@ -1,0 +1,20 @@
+#!/usr/bin/env rms
+
+##env
+module load R/3.3.3-foss-2016b 
+
+#### excavator pair <pair>/excavator_completed 
+
+export PATH=/home/jc2545/programs/samtools-1.6:$PATH
+
+perl /home/jc2545/programs/EXCAVATOR/ReadPerla.pl <input> <pair> --mode somatic
+touch <pair>/excavator_completed
+
+#### annotationRegion pair,tumor <pair>/annotationRegion_completed
+
+new_header=sampleId"\t"chr"\t"start"\t"end"\t"Segment"\t"CNF"\t"CN"\t"Call"\t"ProbCall
+
+sed 's/^/chr/' <pair>/Results/<tumor>/FastCallResults_<tumor>.txt | sed 's/^/'<pair>'\t/' | sed "1s/.*/$new_header/"  > <pair>/Results/<tumor>/FastCallResults_<pair>_sampleID.txt 
+python /home/jc2545/scripts/somaticRegions.py -19 <pair>/Results/<tumor>/FastCallResults_<pair>_sampleID.txt <pair>/Results/<tumor>/FastCallResults_<pair>_sampleID_anno.txt
+
+touch <pair>/annotationRegion_completed

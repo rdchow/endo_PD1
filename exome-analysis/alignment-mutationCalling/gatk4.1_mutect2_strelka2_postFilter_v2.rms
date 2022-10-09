@@ -1,0 +1,79 @@
+#!/usr/bin/env rms
+
+# rms gatk4_mutect2_strelka2_postFilter.rms somatic_sample.txt
+# somatic_sample.txt: tumor, pair
+# the format of strelka2 vcf file: sample order is always: normal, tumor
+# the format of gatk4 vcf file: sample order is random and need to be fixed as normal, tumor
+# sample.txt should be in the directory: sample, pair, T/N
+
+#### mkDir all .mkDir.completed
+
+mkdir -p somatic_snv_indel
+
+touch .mkDir.completed
+
+
+#### cpFile pair .<pair>.cpFile.completed
+
+cp <pair>/gatk4.1_v2/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered.vcf.gz somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered.vcf.gz
+cp <pair>/gatk4.1_v2/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered.vcf.gz.tbi somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered.vcf.gz.tbi
+cp <pair>/strelka2/<pair>/results/variants/somatic.indels.vcf.gz somatic_snv_indel/<pair>.somatic.indels.vcf.gz
+cp <pair>/strelka2/<pair>/results/variants/somatic.indels.vcf.gz.tbi somatic_snv_indel/<pair>.somatic.indels.vcf.gz.tbi
+cp <tumor>/<tumor>.bai <tumor>/<tumor>.bam.bai
+
+touch .<pair>.cpFile.completed
+
+
+#### gatk4_Process pair .<pair>.gatk4_Process.completed
+
+java -Xmx64g -jar /home/jc2545/programs/GenomeAnalysisTK-3.5/GenomeAnalysisTK.jar -R /home/jc2545/ref_data/h_sapiens/1000genomes/2.5/b37/human_g1k_v37_decoy.fasta -T SelectVariants --variant somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered.vcf.gz -o somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered_pass.vcf -select 'vc.isNotFiltered()'
+python /home/wd256/scripts/mutect2_GATK4_VCF_sampleOrder.py somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered_pass.vcf sample.txt somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered_pass_ordered.vcf 
+java -jar /home/jc2545/programs/snpEff_4_0_0/SnpSift.jar filter " (GEN[1].AF >= 0.05) " somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered_pass_ordered.vcf > somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered_pass_ordered_affiltered.vcf
+perl -ane 'print join("\t",@F[0,1,1])."\n" unless(m/^#/)' somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered_pass_ordered_affiltered.vcf > somatic_snv_indel/<pair>.mutect2.pass.snvs.var
+/home/jc2545/programs/bam-readcount-master/bin/bam-readcount -q1 -b15 -w1 -l somatic_snv_indel/<pair>.mutect2.pass.snvs.var -f /home/jc2545/ref_data/h_sapiens/1000genomes/2.5/b37/human_g1k_v37_decoy.fasta <tumor>/<tumor>.bam > somatic_snv_indel/<pair>.mutect2.pass.snvs.readcount
+perl /home/jc2545/programs/variant-filter-master/fpfilter.pl --var-file somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered_pass_ordered_affiltered.vcf --readcount-file somatic_snv_indel/<pair>.mutect2.pass.snvs.readcount --output-file somatic_snv_indel/<pair>.mutect2.pass.fpfilter
+egrep -w "PASS|NoReadCounts" somatic_snv_indel/<pair>.mutect2.pass.fpfilter > somatic_snv_indel/<pair>.mutect2.pass.fpfilter.pass
+awk 'NR==FNR{a[NR]=$0;next}{for (i in a){split(a[i],x," ");if (x[1]==$1&&x[2]==$2)print $0}}' somatic_snv_indel/<pair>.mutect2.pass.fpfilter.pass somatic_snv_indel/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered_pass_ordered_affiltered.vcf > somatic_snv_indel/<pair>.mutect2.pass.filtered.vcf
+perl /home/jc2545/programs/annovar_2014nov12/convert2annovar.pl -includeinfo -allsample -withfreq -format vcf4 somatic_snv_indel/<pair>.mutect2.pass.filtered.vcf > somatic_snv_indel/<pair>.mutect2.pass.filtered.avinput
+perl /home/jc2545/programs/annovar_jul252017/table_annovar.pl somatic_snv_indel/<pair>.mutect2.pass.filtered.avinput /home/jc2545/programs/annovar/humandb/ -buildver hg19 -out somatic_snv_indel/<pair>.mutect2.pass.filtered_anno -remove -protocol refGene,genomicSuperDups,snp138,esp6500si_all,1000g2012apr_all,xgen,lifton,exac03,gnomad_combined,ljb26_all,cosmic81Coding,icgc21 -operation g,r,f,f,f,f,f,f,f,f,f,f -nastring . -otherinfo -polish -xreffile /home/jc2545/programs/annovar_apr162018/annovar/example/gene_fullxref_misz_cancer.txt
+sed 's/^/'<pair>'\t/' somatic_snv_indel/<pair>.mutect2.pass.filtered_anno.hg19_multianno.txt > somatic_snv_indel/<pair>.mutect2.pass.filtered_anno.hg19_multianno_sampleID.txt
+perl /home/wd256/scripts/Mutect2SomaticFilter_annovar_v4.pl somatic_snv_indel/<pair>.mutect2.pass.filtered_anno.hg19_multianno_sampleID.txt
+python /home/wd256/scripts/mutect2_GATK4_indel.py somatic_snv_indel/<pair>.mutect2.pass.filtered_anno.hg19_multianno_sampleID.filtered.txt
+python /home/wd256/scripts/mutect2_GATK4_SNV.py somatic_snv_indel/<pair>.mutect2.pass.filtered_anno.hg19_multianno_sampleID.filtered.txt
+
+touch .<pair>.gatk4_Process.completed
+
+
+#### strelka2_indelProcess pair .<pair>.strelka2_indelProcess.completed
+##mem=10
+
+java -Xmx64g -jar /home/jc2545/programs/GenomeAnalysisTK-3.5/GenomeAnalysisTK.jar -R /home/jc2545/ref_data/h_sapiens/1000genomes/2.5/b37/human_g1k_v37_decoy.fasta -T SelectVariants --variant somatic_snv_indel/<pair>.somatic.indels.vcf.gz -o somatic_snv_indel/<pair>.somatic.indels_pass.vcf -select 'vc.isNotFiltered()' 
+first_format_num=$(grep -n -m 1 '##FORMAT' "somatic_snv_indel/<pair>.somatic.indels_pass.vcf" | cut -d : -f 1)
+sed "$first_format_num"'i##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">' somatic_snv_indel/<pair>.somatic.indels_pass.vcf > somatic_snv_indel/<pair>.somatic.indels_pass_gtmod.vcf
+sed -ri 's|(DP:)|GT:\1|g' somatic_snv_indel/<pair>.somatic.indels_pass_gtmod.vcf
+sed -ri 's|(:BCN50\t)|\10/0:|g' somatic_snv_indel/<pair>.somatic.indels_pass_gtmod.vcf
+sed -ri 's|(:BCN50\t[^\t]*\t)|\10/1:|g' somatic_snv_indel/<pair>.somatic.indels_pass_gtmod.vcf
+perl /home/jc2545/programs/annovar_apr162018/annovar/convert2annovar.pl -includeinfo -allsample -withfreq -format vcf4 somatic_snv_indel/<pair>.somatic.indels_pass_gtmod.vcf > somatic_snv_indel/<pair>.somatic.indels_pass.avinput
+perl /home/jc2545/programs/annovar_apr162018/annovar/table_annovar.pl somatic_snv_indel/<pair>.somatic.indels_pass.avinput /home/jc2545/programs/annovar/humandb/ -buildver hg19 -out somatic_snv_indel/<pair>.somatic.indels_pass_anno -remove -protocol refGene,genomicSuperDups,snp138,esp6500si_all,1000g2012apr_all,xgen,lifton,exac03,gnomad_combined,bravo,ljb26_all,cosmic81Coding,icgc21 -operation g,r,f,f,f,f,f,f,f,f,f,f,f -nastring . -otherinfo -polish -xreffile /home/jc2545/programs/annovar_apr162018/annovar/example/gene_fullxref_misz_cancer.txt
+sed 's/^/'<pair>'\t/' somatic_snv_indel/<pair>.somatic.indels_pass_anno.hg19_multianno.txt > somatic_snv_indel/<pair>.somatic.indels_pass_anno.hg19_multianno_sampleID.txt
+perl /home/jc2545/scripts/Mutect2SomaticFilter_annovar_v4_rare_exonic.pl somatic_snv_indel/<pair>.somatic.indels_pass_anno.hg19_multianno_sampleID.txt
+
+touch .<pair>.strelka2_indelProcess.completed
+
+
+#### Intersect pair .<pair>.Intersect.completed
+
+python /home/wd256/scripts/mutect2_compare.py somatic_snv_indel/<pair>.mutect2.pass.filtered_anno.hg19_multianno_sampleID.filtered_indels.txt somatic_snv_indel/<pair>.somatic.indels_pass_anno.hg19_multianno_sampleID.filtered.txt somatic_snv_indel/<pair>.indels.mutect2.strelka2.txt
+
+touch .<pair>.Intersect.completed
+
+
+#### Combine pair .<pair>.Combine.completed
+
+head -1l somatic_snv_indel/<pair>.indels.mutect2.strelka2.txt > somatic_snv_indel/header.txt
+cat somatic_snv_indel/<pair>.mutect2.pass.filtered_anno.hg19_multianno_sampleID.filtered_snvs.txt somatic_snv_indel/<pair>.indels.mutect2.strelka2.txt > somatic_snv_indel/<pair>.combined.mutect2.strelka2.txt
+sed -i '/Sample/d' somatic_snv_indel/<pair>.combined.mutect2.strelka2.txt
+cat somatic_snv_indel/header.txt somatic_snv_indel/<pair>.combined.mutect2.strelka2.txt > somatic_snv_indel/<pair>.combined.mutect2.strelka2_h.txt
+mv somatic_snv_indel/<pair>.combined.mutect2.strelka2_h.txt somatic_snv_indel/<pair>.combined.mutect2.strelka2.txt
+
+touch .<pair>.Combine.completed

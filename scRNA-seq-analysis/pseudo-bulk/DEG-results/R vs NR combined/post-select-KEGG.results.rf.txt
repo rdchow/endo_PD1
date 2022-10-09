@@ -1,0 +1,120 @@
+Cluster	cellType	group	Pathway	nlp	GeneRatio
+CD16-NK:LR:Allograft rejection	CD16-NK	LR	Allograft rejection	-2.28377626744915	-0.0354609929078014
+CD16-NK:LR:Cellular senescence	CD16-NK	LR	Cellular senescence	-1.72752110787967	-0.0567375886524823
+CD16-NK:LR:FoxO signaling pathway	CD16-NK	LR	FoxO signaling pathway	-0.981586425442881	-0.0354609929078014
+CD16-NK:LR:Graft-versus-host disease	CD16-NK	LR	Graft-versus-host disease	-2.21029174264664	-0.0354609929078014
+CD16-NK:LR:HIF-1 signaling pathway	CD16-NK	LR	HIF-1 signaling pathway	-1.20083023508393	-0.0354609929078014
+CD16-NK:LR:Leukocyte transendothelial migration	CD16-NK	LR	Leukocyte transendothelial migration	-2.21029174264664	-0.0567375886524823
+CD16-NK:LR:Natural killer cell mediated cytotoxicity	CD16-NK	LR	Natural killer cell mediated cytotoxicity	-5.11755007054195	-0.099290780141844
+CD16-NK:LR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD16-NK	LR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-1.00595764840719	-0.0283687943262411
+CD16-NK:LR:Prolactin signaling pathway	CD16-NK	LR	Prolactin signaling pathway	-1.23579707556511	-0.0283687943262411
+CD16-NK:LR:Proteasome	CD16-NK	LR	Proteasome	-1.17500385955159	-0.0212765957446809
+CD16-NK:LR:Ribosome	CD16-NK	LR	Ribosome	-2.02713509026827	-0.0638297872340425
+CD16-NK:LR:Sphingolipid signaling pathway	CD16-NK	LR	Sphingolipid signaling pathway	-2.49999408216181	-0.0638297872340425
+CD16-NK:LR:T cell receptor signaling pathway	CD16-NK	LR	T cell receptor signaling pathway	-1.23579707556511	-0.0354609929078014
+CD16-NK:LR:Thyroid hormone signaling pathway	CD16-NK	LR	Thyroid hormone signaling pathway	-1.41208416459219	-0.0425531914893617
+CD16-NK:LR:VEGF signaling pathway	CD16-NK	LR	VEGF signaling pathway	-2.28377626744915	-0.0425531914893617
+CD16-NK:NLR:Fatty acid metabolism	CD16-NK	NLR	Fatty acid metabolism	1.00147753028185	0.0234375
+CD16-NK:NLR:FoxO signaling pathway	CD16-NK	NLR	FoxO signaling pathway	-1.03631455552116	-0.0387323943661972
+CD16-NK:NLR:Leukocyte transendothelial migration	CD16-NK	NLR	Leukocyte transendothelial migration	1.25336465402053	0.0390625
+CD16-NK:NLR:NOD-like receptor signaling pathway	CD16-NK	NLR	NOD-like receptor signaling pathway	1.35978100811931	0.0546875
+CD16-NK:NLR:Natural killer cell mediated cytotoxicity	CD16-NK	NLR	Natural killer cell mediated cytotoxicity	0.817871183479576	0.03515625
+CD16-NK:NLR:Oxidative phosphorylation	CD16-NK	NLR	Oxidative phosphorylation	-1.1978475917974	-0.0422535211267606
+CD16-NK:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD16-NK	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	0.817871183479576	0.02734375
+CD16-NK:NLR:Proteasome	CD16-NK	NLR	Proteasome	6.64197765757422	0.05078125
+CD16-NK:NLR:Ribosome	CD16-NK	NLR	Ribosome	-7.35908932618608	-0.0880281690140845
+CD16-NK:NLR:T cell receptor signaling pathway	CD16-NK	NLR	T cell receptor signaling pathway	-1.11045456609767	-0.0352112676056338
+CD16-NK:NLR:VEGF signaling pathway	CD16-NK	NLR	VEGF signaling pathway	-0.737118062794465	-0.0211267605633803
+CD4-Activated:LR:HIF-1 signaling pathway	CD4-Activated	LR	HIF-1 signaling pathway	-0.996800805045578	-0.0467836257309941
+CD4-Activated:LR:Ribosome	CD4-Activated	LR	Ribosome	-9.48958288878112	-0.128654970760234
+CD4-Activated:LR:Sphingolipid signaling pathway	CD4-Activated	LR	Sphingolipid signaling pathway	-0.838200858156986	-0.0467836257309941
+CD4-Activated:LR:VEGF signaling pathway	CD4-Activated	LR	VEGF signaling pathway	-0.723584612359454	-0.0292397660818713
+CD4-Activated:NLR:Allograft rejection	CD4-Activated	NLR	Allograft rejection	1.81274191901631	0.0159045725646123
+CD4-Activated:NLR:Cellular senescence	CD4-Activated	NLR	Cellular senescence	-1.56787794410533	-0.0403225806451613
+CD4-Activated:NLR:Fatty acid metabolism	CD4-Activated	NLR	Fatty acid metabolism	3.80312279646182	0.0278330019880716
+CD4-Activated:NLR:FoxO signaling pathway	CD4-Activated	NLR	FoxO signaling pathway	-2.76505515524813	-0.0423387096774194
+CD4-Activated:NLR:Graft-versus-host disease	CD4-Activated	NLR	Graft-versus-host disease	1.19131818382711	0.0139165009940358
+CD4-Activated:NLR:HIF-1 signaling pathway	CD4-Activated	NLR	HIF-1 signaling pathway	-1.37515648502901	-0.030241935483871
+CD4-Activated:NLR:Leukocyte transendothelial migration	CD4-Activated	NLR	Leukocyte transendothelial migration	1.26447491485564	0.0278330019880716
+CD4-Activated:NLR:NOD-like receptor signaling pathway	CD4-Activated	NLR	NOD-like receptor signaling pathway	3.4084712308664	0.0536779324055666
+CD4-Activated:NLR:Natural killer cell mediated cytotoxicity	CD4-Activated	NLR	Natural killer cell mediated cytotoxicity	1.35249431253212	0.0318091451292246
+CD4-Activated:NLR:Oxidative phosphorylation	CD4-Activated	NLR	Oxidative phosphorylation	-1.56787794410533	-0.0362903225806452
+CD4-Activated:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Activated	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-0.922088449600752	-0.0221774193548387
+CD4-Activated:NLR:Prolactin signaling pathway	CD4-Activated	NLR	Prolactin signaling pathway	-1.04563689661827	-0.0201612903225806
+CD4-Activated:NLR:Proteasome	CD4-Activated	NLR	Proteasome	10.913867062304	0.0417495029821074
+CD4-Activated:NLR:Ribosome	CD4-Activated	NLR	Ribosome	-13.5687886679622	-0.0846774193548387
+CD4-Activated:NLR:Sphingolipid signaling pathway	CD4-Activated	NLR	Sphingolipid signaling pathway	-1.13598171818477	-0.030241935483871
+CD4-Activated:NLR:VEGF signaling pathway	CD4-Activated	NLR	VEGF signaling pathway	-0.848363904731684	-0.0161290322580645
+CD4-Naive:LR:Allograft rejection	CD4-Naive	LR	Allograft rejection	-0.894399936729255	-0.0193548387096774
+CD4-Naive:LR:Cellular senescence	CD4-Naive	LR	Cellular senescence	-0.938198911553511	-0.0451612903225806
+CD4-Naive:LR:FoxO signaling pathway	CD4-Naive	LR	FoxO signaling pathway	-1.1474585195831	-0.0451612903225806
+CD4-Naive:LR:Graft-versus-host disease	CD4-Naive	LR	Graft-versus-host disease	-0.836392834463909	-0.0193548387096774
+CD4-Naive:LR:HIF-1 signaling pathway	CD4-Naive	LR	HIF-1 signaling pathway	-1.07549581076657	-0.0387096774193548
+CD4-Naive:LR:Leukocyte transendothelial migration	CD4-Naive	LR	Leukocyte transendothelial migration	-1.02631007089336	-0.0387096774193548
+CD4-Naive:LR:NOD-like receptor signaling pathway	CD4-Naive	LR	NOD-like receptor signaling pathway	-1.26071764572983	-0.0580645161290323
+CD4-Naive:LR:Natural killer cell mediated cytotoxicity	CD4-Naive	LR	Natural killer cell mediated cytotoxicity	-1.80771575065169	-0.0580645161290323
+CD4-Naive:LR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Naive	LR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-1.6389618232533	-0.0451612903225806
+CD4-Naive:LR:Prolactin signaling pathway	CD4-Naive	LR	Prolactin signaling pathway	-1.19423181767851	-0.032258064516129
+CD4-Naive:LR:Ribosome	CD4-Naive	LR	Ribosome	-6.17193680274678	-0.109677419354839
+CD4-Naive:LR:Sphingolipid signaling pathway	CD4-Naive	LR	Sphingolipid signaling pathway	-2.39335411351409	-0.0645161290322581
+CD4-Naive:LR:T cell receptor signaling pathway	CD4-Naive	LR	T cell receptor signaling pathway	-1.46833111197628	-0.0451612903225806
+CD4-Naive:LR:VEGF signaling pathway	CD4-Naive	LR	VEGF signaling pathway	-1.41794814362061	-0.032258064516129
+CD4-Naive:NLR:Allograft rejection	CD4-Naive	NLR	Allograft rejection	1.54505998087075	0.0165745856353591
+CD4-Naive:NLR:Cellular senescence	CD4-Naive	NLR	Cellular senescence	-1.50442163531124	-0.0364025695931477
+CD4-Naive:NLR:FoxO signaling pathway	CD4-Naive	NLR	FoxO signaling pathway	-2.81998079972717	-0.0449678800856531
+CD4-Naive:NLR:Graft-versus-host disease	CD4-Naive	NLR	Graft-versus-host disease	0.939315259549996	0.0138121546961326
+CD4-Naive:NLR:HIF-1 signaling pathway	CD4-Naive	NLR	HIF-1 signaling pathway	-2.00797691625205	-0.0321199143468951
+CD4-Naive:NLR:Leukocyte transendothelial migration	CD4-Naive	NLR	Leukocyte transendothelial migration	2.91208105034493	0.0414364640883978
+CD4-Naive:NLR:NOD-like receptor signaling pathway	CD4-Naive	NLR	NOD-like receptor signaling pathway	3.20530393249572	0.0580110497237569
+CD4-Naive:NLR:Natural killer cell mediated cytotoxicity	CD4-Naive	NLR	Natural killer cell mediated cytotoxicity	1.27117080139531	0.0331491712707182
+CD4-Naive:NLR:Oxidative phosphorylation	CD4-Naive	NLR	Oxidative phosphorylation	6.34466681978263	0.0635359116022099
+CD4-Naive:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD4-Naive	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-1.96964237018897	-0.0278372591006424
+CD4-Naive:NLR:Prolactin signaling pathway	CD4-Naive	NLR	Prolactin signaling pathway	-2.64841823799043	-0.0278372591006424
+CD4-Naive:NLR:Proteasome	CD4-Naive	NLR	Proteasome	13.8581283216417	0.0580110497237569
+CD4-Naive:NLR:Ribosome	CD4-Naive	NLR	Ribosome	-1.96791702132452	-0.0406852248394004
+CD4-Naive:NLR:Sphingolipid signaling pathway	CD4-Naive	NLR	Sphingolipid signaling pathway	-2.03085432706456	-0.0342612419700214
+CD4-Naive:NLR:T cell receptor signaling pathway	CD4-Naive	NLR	T cell receptor signaling pathway	-1.28574940257501	-0.0256959314775161
+CD4-Naive:NLR:Thyroid hormone signaling pathway	CD4-Naive	NLR	Thyroid hormone signaling pathway	-2.60500654971585	-0.0385438972162741
+CD4-Naive:NLR:VEGF signaling pathway	CD4-Naive	NLR	VEGF signaling pathway	-1.61907654142082	-0.019271948608137
+CD56-NK:LR:Allograft rejection	CD56-NK	LR	Allograft rejection	-5.38218027341005	-0.266666666666667
+CD56-NK:LR:Cellular senescence	CD56-NK	LR	Cellular senescence	-1.23406571883183	-0.133333333333333
+CD56-NK:LR:FoxO signaling pathway	CD56-NK	LR	FoxO signaling pathway	-0.747031583427704	-0.0666666666666667
+CD56-NK:LR:Graft-versus-host disease	CD56-NK	LR	Graft-versus-host disease	-5.38218027341005	-0.266666666666667
+CD56-NK:LR:HIF-1 signaling pathway	CD56-NK	LR	HIF-1 signaling pathway	-0.785928223976727	-0.0666666666666667
+CD56-NK:LR:Natural killer cell mediated cytotoxicity	CD56-NK	LR	Natural killer cell mediated cytotoxicity	-3.59255275134031	-0.266666666666667
+CD56-NK:LR:Ribosome	CD56-NK	LR	Ribosome	15.892538906237	0.65
+CD56-NK:NLR:Ribosome	CD56-NK	NLR	Ribosome	-12.1651138037446	-0.233766233766234
+CD8-Activated:LR:Leukocyte transendothelial migration	CD8-Activated	LR	Leukocyte transendothelial migration	-0.743650763109639	-0.036101083032491
+CD8-Activated:LR:Natural killer cell mediated cytotoxicity	CD8-Activated	LR	Natural killer cell mediated cytotoxicity	-7.74962796114162	-0.0830324909747292
+CD8-Activated:LR:Ribosome	CD8-Activated	LR	Ribosome	7.38452115897683	0.142857142857143
+CD8-Activated:LR:Sphingolipid signaling pathway	CD8-Activated	LR	Sphingolipid signaling pathway	-2.98952140089525	-0.0541516245487365
+CD8-Activated:NLR:Cellular senescence	CD8-Activated	NLR	Cellular senescence	-1.04301350842795	-0.0408805031446541
+CD8-Activated:NLR:Fatty acid metabolism	CD8-Activated	NLR	Fatty acid metabolism	0.772104743893703	0.0185758513931889
+CD8-Activated:NLR:HIF-1 signaling pathway	CD8-Activated	NLR	HIF-1 signaling pathway	0.734157837822641	0.0278637770897833
+CD8-Activated:NLR:NOD-like receptor signaling pathway	CD8-Activated	NLR	NOD-like receptor signaling pathway	1.19298167024377	0.0464396284829721
+CD8-Activated:NLR:Natural killer cell mediated cytotoxicity	CD8-Activated	NLR	Natural killer cell mediated cytotoxicity	-2.19914389660167	-0.050314465408805
+CD8-Activated:NLR:Oxidative phosphorylation	CD8-Activated	NLR	Oxidative phosphorylation	3.2303387179286	0.0526315789473684
+CD8-Activated:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD8-Activated	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	-0.760122277138618	-0.0251572327044025
+CD8-Activated:NLR:Proteasome	CD8-Activated	NLR	Proteasome	6.92179735908807	0.043343653250774
+CD8-Activated:NLR:Ribosome	CD8-Activated	NLR	Ribosome	-2.50500213613169	-0.059748427672956
+CD8-Activated:NLR:Sphingolipid signaling pathway	CD8-Activated	NLR	Sphingolipid signaling pathway	-1.2177894660737	-0.0377358490566038
+CD8-Activated:NLR:T cell receptor signaling pathway	CD8-Activated	NLR	T cell receptor signaling pathway	-1.33197203312449	-0.0377358490566038
+CD8-Activated:NLR:VEGF signaling pathway	CD8-Activated	NLR	VEGF signaling pathway	-1.2177894660737	-0.0251572327044025
+CD8-Naive:LR:HIF-1 signaling pathway	CD8-Naive	LR	HIF-1 signaling pathway	-1.19469257563946	-0.0595238095238095
+CD8-Naive:LR:Oxidative phosphorylation	CD8-Naive	LR	Oxidative phosphorylation	-0.742269822696128	-0.0476190476190476
+CD8-Naive:LR:Ribosome	CD8-Naive	LR	Ribosome	-6.97003083197271	-0.166666666666667
+CD8-Naive:LR:Sphingolipid signaling pathway	CD8-Naive	LR	Sphingolipid signaling pathway	-1.12609540498348	-0.0595238095238095
+CD8-Naive:LR:T cell receptor signaling pathway	CD8-Naive	LR	T cell receptor signaling pathway	0.734861601183378	0.0561797752808989
+CD8-Naive:NLR:Allograft rejection	CD8-Naive	NLR	Allograft rejection	0.773440087731421	0.0158730158730159
+CD8-Naive:NLR:Cellular senescence	CD8-Naive	NLR	Cellular senescence	1.3132930210799	0.0476190476190476
+CD8-Naive:NLR:FoxO signaling pathway	CD8-Naive	NLR	FoxO signaling pathway	-1.6159441024807	-0.0576923076923077
+CD8-Naive:NLR:Graft-versus-host disease	CD8-Naive	NLR	Graft-versus-host disease	1.21480696289583	0.0211640211640212
+CD8-Naive:NLR:Leukocyte transendothelial migration	CD8-Naive	NLR	Leukocyte transendothelial migration	2.16697727005779	0.0529100529100529
+CD8-Naive:NLR:NOD-like receptor signaling pathway	CD8-Naive	NLR	NOD-like receptor signaling pathway	2.16002704416825	0.0687830687830688
+CD8-Naive:NLR:Natural killer cell mediated cytotoxicity	CD8-Naive	NLR	Natural killer cell mediated cytotoxicity	2.01254308576619	0.0529100529100529
+CD8-Naive:NLR:Oxidative phosphorylation	CD8-Naive	NLR	Oxidative phosphorylation	-1.82013394759314	-0.0641025641025641
+CD8-Naive:NLR:PD-L1 expression and PD-1 checkpoint pathway in cancer	CD8-Naive	NLR	PD-L1 expression and PD-1 checkpoint pathway in cancer	1.18764070464485	0.0317460317460317
+CD8-Naive:NLR:Proteasome	CD8-Naive	NLR	Proteasome	1.5516871870512	0.0264550264550265
+CD8-Naive:NLR:Ribosome	CD8-Naive	NLR	Ribosome	-31.755482969096	-0.256410256410256
+CD8-Naive:NLR:Sphingolipid signaling pathway	CD8-Naive	NLR	Sphingolipid signaling pathway	1.4435311898898	0.0423280423280423
+CD8-Naive:NLR:T cell receptor signaling pathway	CD8-Naive	NLR	T cell receptor signaling pathway	2.31978106665215	0.0529100529100529

@@ -1,0 +1,34 @@
+category	time
+Oxidative phosphorylation	pre
+NOD-like receptor signaling pathway	pre
+PD-L1 expression and PD-1 checkpoint pathway in cancer	pre
+T cell receptor signaling pathway	pre
+TNF signaling pathway	pre
+T cell receptor signaling pathway	pre
+Lysine degradation	post
+NOD-like receptor signaling pathway	post
+Antigen processing and presentation	post
+Oxidative phosphorylation	post
+Graft-versus-host disease	post
+Cell adhesion molecules	post
+Lysosome	post
+Fatty acid metabolism	post
+Ribosome	post
+Th1 and Th2 cell differentiation	post
+Natural killer cell mediated cytotoxicity	post
+TNF signaling pathway	post
+NF-kappa B signaling pathway	post
+T cell receptor signaling pathway	post
+PD-L1 expression and PD-1 checkpoint pathway in cancer	post
+Cellular senescence	post
+HIF-1 signaling pathway	post
+Leukocyte transendothelial migration	post
+Ferroptosis	pre
+Apoptosis	pre
+RNA degradation	post
+Nucleotide metabolism	pre
+Toll-like receptor signaling pathway	post
+Cellular senescence	post
+Ribosome	pre
+Mitophagy - animal	pre
+Phosphatidylinositol signaling system	pre

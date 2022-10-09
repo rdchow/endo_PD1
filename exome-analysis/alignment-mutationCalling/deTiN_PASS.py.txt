@@ -1,0 +1,74 @@
+# python /home/wd256/scripts/deTiN_PASS.py <vcf file>
+# python /home/wd256/scripts/deTiN_PASS.py LMS9_3.mutect2.vcf
+
+import sys
+from decimal import Decimal
+
+# import the vcf file
+input = open(sys.argv[1], 'r')
+name = sys.argv[1][:-4] + '_deTiN_P.vcf'
+output = open(name,'w')
+
+# calculate combination
+def comb(N,k): # from scipy.comb(), but MODIFIED!
+    if (k > N) or (N < 0) or (k < 0):
+        return 0L
+    N,k = map(long,(N,k))
+    top = N
+    val = 1L
+    while (top > (N-k)):
+        val *= top
+        top -= 1
+    n = 1L
+    while (n < k+1L):
+        val /= n
+        n += 1
+    return val
+
+# fisher test (one tail)
+def fisher(a,b,c,d):
+	p_sum = 0
+	for i in range(0,c+1):
+		c1 = i
+		a1 = a+c-c1
+		b1 = a+b-a1
+		d1 = c+d-c1
+		p = Decimal(comb(a1+b1,a1)*comb(c1+d1,c1))/Decimal(comb(a1+b1+c1+d1, a1+c1))
+		p_sum += p
+	if p_sum < 0.05:
+		return 1
+	else:
+		return 0
+
+# get the alt and ref for tumor and normal
+for line in input:
+	if line[0] != '#':
+		data = line.strip().split('\t')
+		ref = data[3]
+		alt = data[4]
+		tumor = data[9]
+		normal = data[10]
+		normal_alt = int(normal.split(':')[1].split(',')[1])
+		# keep: alt_allele_in_normal; cluster; multi_event_alt_allele_in_normal
+		filter = data[6].split(';')
+		flag = 0
+		for item in filter:
+			if item == 'PASS' or item == 'str_contraction' or item == 't_lod_fstar' or item == 'triallelic_site':
+					flag = 1
+					
+		if  normal_alt > 0 and flag == 0 and len(ref) == 1 and len(alt) == 1:   # remove indels with sequence length >= 2
+			tumor_ref = int(tumor.split(':')[1].split(',')[0])
+			tumor_alt = int(tumor.split(':')[1].split(',')[1])
+			normal_ref = int(normal.split(':')[1].split(',')[0])
+			if fisher(tumor_alt,tumor_ref,normal_alt,normal_ref) == 1:
+				output.write(data[0]+'\t'+data[1]+'\t'+data[2]+'\t'+data[3]+'\t'+data[4]+'\t'+data[5]+'\t'+'PASS_deTiN'+'\t'+data[7]+'\t'+data[8]+'\t'+data[9]+'\t'+data[10]+'\n')
+		else:
+			output.write(line)
+			
+	else:
+		output.write(line)
+		
+
+# close the files
+input.close()
+output.close()

@@ -1,0 +1,315 @@
+#!/usr/bin/env rms
+
+##python
+
+import sys
+import os.path
+import re
+
+genome = "auto"
+exome = "auto"
+nodes = ""
+
+
+# Check the command-line arguments, and output the genome name and chromosome ordering.
+argn = 1
+while argn < len(sys.argv):
+    if sys.argv[argn] == "-19":
+        genome = "hg19"
+        argn += 1
+    elif sys.argv[argn] == "-38":
+        genome = "grch38"
+        argn += 1
+    elif sys.argv[argn] == "-med":
+        exome = "medexome"
+        argn += 1
+    else:
+        break
+
+errFlag = False
+if genome == "auto":
+    sys.stderr.write("Error:  The reference must be specified using either the -19 or -38 options.\n\n")
+    errFlag = True
+
+if exome == "auto":
+    if genome == "hg19":
+        exome = "V2"
+    else:
+        exome = "medexome"
+
+if exome == "V2" and genome == "grch38":
+    sys.stderr.write("Error:  The V2 bed file can only be used with the hg19 reference.\n\n")
+    errFlag = True
+
+if errFlag or argn == len(sys.argv):
+    sys.stderr.write("Usage: somaticMutect2.rms { -19 | -38 } [-med] samples.txt\n")
+    sys.stderr.write("                -19  - Use hg19 as the reference genome.  One of -19 and -38 must be given.\n")
+    sys.stderr.write("                -38  - Use GRCh38 as the reference genome. One of -19 and -38 must be given.\n")
+    sys.stderr.write("                -med - Use MedExome exome bed file as the target regions (hg19).\n")
+    sys.stderr.write("                             [MedExome is default for hg38, V2 is default for hg19]\n")
+    sys.exit(-1)
+
+pairs = {}
+pairsamples = {}
+samples = []
+sys.stdout.write("##sheet=EOF\n")
+sys.stdout.write("Sample Pair Type\n")
+try:
+   fp = open(sys.argv[argn])
+   for line in fp.readlines():
+      line = line.strip()
+      if len(line) == 0:
+         continue
+      fields = line.split(" ")
+      if len(fields) != 3:
+         sys.stderr.write("Error:  samples.txt lines must contain 3 columns, Sample, Pairname, Type:  %s\n" % line)
+         sys.exit(-1)
+
+      samples.append(fields[0])
+
+      type = fields[2].lower()
+      if type != 't' and type != 'n':
+         sys.stderr.write("Error:  samples.txt type value must be 't' or 'n':  %s\n" % line)
+         sys.exit(-1)
+
+      sys.stdout.write("%s %s %s\n" % (fields[0], fields[1], type))
+
+      if fields[1] not in pairs:
+          pairs[fields[1]] = type
+          pairsamples[fields[1]] = [ fields[0] ]
+      else:
+          pairs[fields[1]] += type
+          pairsamples[fields[1]].append(fields[0])
+      
+   fp.close()
+except IOError:
+   sys.stderr.write("Error:  Unable to read samples.txt file:  %s\n" % sys.argv[argn])
+   sys.exit(-1)
+
+sys.stdout.write("EOF\n")
+
+#errFlag = False
+#for pair in pairs:
+#    if pairs[pair] != "tn" and pairs[pair] != "nt":
+#        sys.stderr.write("Error:  Pair %s does not contain exactly 1 tumor and 1 normal sample:  %s\n" % (pair, ",".join(pairsamples[pair])))
+#        errFlag = True
+#if errFlag:
+#    sys.exit(-1)
+
+sampleSizes = {}
+
+# Parse the sample directory arguments, find the fastq files, and generate the spreadsheet of filepaths.
+sys.stdout.write("##sheet=EOF\n")
+sys.stdout.write("Sample Filecnt Path\n")
+for arg in samples:
+    dir = arg
+    if dir.endswith("/"):
+        dir = dir[:-1]
+
+    sampleName = os.path.basename(dir)
+    udir = dir + "/Unaligned"
+
+    if not os.path.isdir(dir) or not os.path.isdir(udir):
+        sys.stderr.write("Error:  Cannot find FASTQ files in sample directory:  " + arg + "\n")
+        sys.exit(-1)
+
+    cnt = 0
+    for file in os.listdir(udir):
+        if file.endswith(".fastq.gz") or file.endswith(".fastq.qp"):
+            match = re.search("_(R\d)_(\d\d\d).(\d+m\.)?fastq.(gz|qp)$", file)
+            if match is None:
+                sys.stderr.write("Error:  FASTQ file name not in a parsable format:  " + arg + "\n")
+                sys.exit(-1)
+            if match.group(1) == "R1":
+                cnt += 1
+                sys.stdout.write("%s %03d %s\n" % (sampleName, cnt, udir +"/" + file))
+
+            try:
+                bytes = os.stat(udir + "/" + file).st_size
+                if file.endswith(".qp"):
+                    bytes += int(bytes * 1.8)
+            except:
+                bytes = 400000000
+
+            if sampleName not in sampleSizes:
+                sampleSizes[sampleName] = bytes / 1000000000.0
+            else:
+                sampleSizes[sampleName] += bytes / 1000000000.0
+
+    if cnt == 0:
+        sys.stderr.write("Error:  No FASTQ files found for sample:  " + arg + "\n")
+        sys.exit(-1)
+
+sys.stdout.write("EOF\n")
+
+# Write the spreadsheet of sample sizes.
+sys.stdout.write("##sheet=EOF\n")
+sys.stdout.write("Sample Filesize\n")
+for sample in sampleSizes:
+    sys.stdout.write("%s %d\n" % (sample, int(sampleSizes[sample] + 2)))
+sys.stdout.write("EOF\n")
+
+# Write the option values as parameters to RMS, along with the breakdown by chromosome.
+
+sys.stdout.write("##genome=( %s )\n" % genome)
+sys.stdout.write("##exome=( %s )\n" % exome)
+
+if genome == "hg19":
+   sys.stdout.write("##chrBySize=( 1 2 3 4 5 6 7 X 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 Y MT )\n")
+   sys.stdout.write("##chr=( 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 X Y MT )\n")
+#   sys.stdout.write("##chunk=( 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 )\n")
+   sys.stdout.write("##chunk=( xaa xab xac xad xae xaf xag xah xai xaj xak xal xam xan xao xap xaq xar xas xat xau xav xaw xax xay xaz xba xbb xbc xbd xbe xbf xbg xbh xbi xbj xbk xbl xbm xbn xbo xbp xbq xbr xbs xbt xbu xbv )\n")
+else:
+   sys.stdout.write("##chrBySize=( chr1 chr2 chr3 chr4 chr5 chr6 chr7 chrX chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrY chrM )\n")
+   sys.stdout.write("##chr=( chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX chrY chrM )\n")
+   sys.stdout.write("##chunk=( chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chr23 chr24 chr25 chr26 chr27 chr28 chr29 chr30 chr31 chr32 chr33 chr34 chr35 chr36 chr37 chr38 chr39 chr40 chr41 chr42 chr43 chr44 chr45 chr46 chr47 chr48 )\n")
+
+##env
+
+export ROOTDIR=/home/jk2269/somaticExome_Mar2017
+#export CHUNKDIR=/home/jc2545/ref_data/h_sapiens/intervals/hs37d5_MedExome_and_coding_padded_Nov2015_by_chunks
+export CHUNKDIR=/home/jc2545/ref_data/h_sapiens/intervals/hs37d5_V2_and_coding_padded_Nov2015_by_chunk
+
+#alias pbm="source /home/bioinfo/software/knightlab/bin/pbmscript.sh"
+alias pbm="source /home/bioinfo/software/knightlab/bin_Mar2016.ruddle/pbmscript.sh"
+
+source /home/bioinfo/software/knightlab/setup-lang.sh
+
+export PATH=/home/sz224/Python-2.7.3:/home/jk2269/soft/R-3.1.2/lib64/R/bin:/usr/java/latest/bin:$PATH
+export PYTHONPATH=/home/jk2269/.local/lib/python2.7/site-packages:${PYTHONPATH-}
+export LD_LIBRARY_PATH=/home/jk2269/soft/R-3.1.2/lib64/R/lib:${LD_LIBRARY_PATH-}
+export R_LIBS_USER=/home/jk2269/R_libs
+
+pbm bwa
+pbm samtools
+pbm picard
+#pbm gatk-3.2-2
+pbm quip
+pbm gatkutil_Mar2016
+pbm vcfAnnotate
+#pbm mutect
+#pbm indelocator
+
+if [ "<genome>" == "hg19" ] ; then
+   pbm hs37d5bundle
+   if [ "<exome>" == "V2" ] ; then
+      pbm hs37d5exomeV2
+   else
+      pbm hs37d5exomeMed
+   fi
+else
+   pbm grch38bundle
+   pbm exomeX38med
+fi
+
+REFROOT=`echo $REF | sed 's/\.fasta//'`
+##local=${REFROOT}.*
+
+REFBASE=`basename $REF`
+
+##local=${BUNDLE}/zipped/*
+
+#### makeDir pair <pair>/gatk4.1_v2
+
+mkdir -p <pair>/gatk4.1_v2
+
+#### mutectChrom pair,chunk <pair>/gatk4.1_v2/<pair>.mutect2.<chunk>.vcf
+##normal=sample if type=n
+##tumor=sample if type=t
+##ppn=1
+##local=4x<tumor>/<tumor>.bam
+##mem=12
+##io=10
+
+flock <local>/rmscp.lock -c "rsync -t --bwlimit=30000 <normal>/<normal>.ba[mi] <tumor>/<tumor>.ba[mi] <tmp> ; sleep 20"
+
+#mutect2 gatk4
+
+/home/jc2545/programs/gatk-4.1.2.0/gatk --java-options "-Xmx6g" Mutect2 \
+-R /home/jc2545/ref_data/h_sapiens/1000genomes/2.5/b37/human_g1k_v37_decoy.fasta \
+-I <tmp>/<tumor>.bam \
+-I <tmp>/<normal>.bam \
+-tumor <tumor> \
+-normal <normal> \
+-pon /ycga-ba/ba_sequencers5/scratch/sz97/Mathieu/matched_normal_V2/gatk4/pon_v2_n78.vcf.gz \
+--germline-resource /home/jc2545/programs/gatk-4.1.2.0/resources/af-only-gnomad.raw.sites.b37.vcf.gz \
+--disable-read-filter MateOnSameContigOrNoMappedMateReadFilter \
+-L $CHUNKDIR/<chunk>.bed \
+--f1r2-tar-gz <tmp>/<pair>.f1r2.<chunk>.tar.gz \
+-O <tmp>/<pair>.mutect2.<chunk>.vcf 
+#-bamout <pair>/gatk4.1_v2/<pair>.mutect2.<chunk>.bam 
+
+cp <tmp>/<pair>.mutect2.<chunk>.vcf <pair>/gatk4.1_v2
+cp <tmp>/<pair>.f1r2.<chunk>.tar.gz <pair>/gatk4.1_v2 
+cp <tmp>/<pair>.mutect2.<chunk>.vcf.stats <pair>/gatk4.1_v2
+#gunzip <pair>/gatk4.1_v2/<pair>.mutect2.<chunk>.vcf.gz
+
+#### mutect pair <pair>/gatk4.1_v2/<pair>.mutect2.vcf.stats
+##io=10
+        
+java -Xmx10g -XX:ParallelGCThreads=6 -cp /home/jc2545/programs/GenomeAnalysisTK-3.5/GenomeAnalysisTK.jar org.broadinstitute.gatk.tools.CatVariants \
+   <chunk,prefix="-V <pair>/gatk4.1_v2/<pair>.mutect2.",suffix=".vcf"> -R <local>/$REFBASE \
+   -out <pair>/gatk4.1_v2/<pair>.mutect2.vcf -assumeSorted
+
+bgzip <pair>/gatk4.1_v2/<pair>.mutect2.vcf
+tabix <pair>/gatk4.1_v2/<pair>.mutect2.vcf.gz
+
+/home/jc2545/programs/gatk-4.1.2.0/gatk --java-options "-Xmx6g" MergeMutectStats \
+<chunk,prefix="-stats <pair>/gatk4.1_v2/<pair>.mutect2.",suffix=".vcf.stats"> \
+-O <pair>/gatk4.1_v2/<pair>.mutect2.vcf.gz.stats
+
+rm -f <pair>/gatk4.1_v2/<pair>.mutect2.<chunk,glob=True>.vcf*
+
+/home/jc2545/programs/gatk-4.1.2.0/gatk --java-options "-Xmx6g" LearnReadOrientationModel \
+<chunk,prefix="-I <pair>/gatk4.1_v2/<pair>.f1r2.",suffix=".tar.gz"> \
+-O <pair>/gatk4.1_v2/<pair>.read-orientation-model.tar.gz
+
+rm -f <pair>/gatk4.1_v2/<pair>.f1r2.<chunk,glob=True>.tar.gz
+
+#### getPileupsforTumor pair <pair>/<sample>_getpileupsummaries.table
+##normal=sample if type=n
+##tumor=sample if type=t
+/home/jc2545/programs/gatk-4.1.2.0/gatk GetPileupSummaries \
+-I <tumor>/<tumor>.bam \
+-V /home/jc2545/programs/gatk-4.1.2.0/resources/small_exac_common_3_b37.vcf.gz \
+-L /home/jc2545/programs/gatk-4.1.2.0/resources/small_exac_common_3_b37.vcf.gz \
+-O <pair>/<tumor>_getpileupsummaries.table
+
+#### getPileupsforNormal pair <pair>/<sample>_getpileupsummaries.table
+##normal=sample if type=n
+##tumor=sample if type=t
+/home/jc2545/programs/gatk-4.1.2.0/gatk GetPileupSummaries \
+-I <normal>/<normal>.bam \
+-V /home/jc2545/programs/gatk-4.1.2.0/resources/small_exac_common_3_b37.vcf.gz \
+-L /home/jc2545/programs/gatk-4.1.2.0/resources/small_exac_common_3_b37.vcf.gz \
+-O <pair>/<normal>_getpileupsummaries.table
+
+#### calculateContamination pair <pair>/<pair>_segments.table
+##normal=sample if type=n
+##tumor=sample if type=t
+/home/jc2545/programs/gatk-4.1.2.0/gatk CalculateContamination \
+-I <pair>/<tumor>_getpileupsummaries.table \
+-matched <pair>/<normal>_getpileupsummaries.table \
+-O <pair>/<pair>_calculatecontamination.table \
+-tumor-segmentation <pair>/<pair>_segments.table
+
+#### filterByContaminants pair <pair>/gatk4.1_v2/<pair>.mutect2.contamFiltered_orientFiltered.vcf.gz
+##normal=sample if type=n
+##tumor=sample if type=t
+/home/jc2545/programs/gatk-4.1.2.0/gatk FilterMutectCalls \
+-V <pair>/gatk4.1_v2/<pair>.mutect2.vcf.gz \
+-R /home/jc2545/ref_data/h_sapiens/1000genomes/2.5/b37/human_g1k_v37_decoy.fasta \
+--ob-priors <pair>/gatk4.1_v2/<pair>.read-orientation-model.tar.gz \
+--tumor-segmentation <pair>/<pair>_segments.table \
+--contamination-table <pair>/<pair>_calculatecontamination.table \
+-O <pair>/gatk4.1_v2/<pair>.mutect2.contamFiltered_orientFiltered.vcf.gz
+
+#### filterAlignment pair <pair>/gatk4.1_v2/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered.vcf.gz 
+##normal=sample if type=n
+##tumor=sample if type=t
+/home/jc2545/programs/gatk-4.1.2.0/gatk FilterAlignmentArtifacts \
+-R /home/jc2545/ref_data/h_sapiens/1000genomes/2.5/b37/human_g1k_v37_decoy.fasta \
+-V <pair>/gatk4.1_v2/<pair>.mutect2.contamFiltered_orientFiltered.vcf.gz \
+-I <tumor>/<tumor>.bam \
+--bwa-mem-index-image /home/jc2545/ref_data/h_sapiens/1000genomes/2.5/b37/human_g1k_v37_decoy.fasta.img \
+-O <pair>/gatk4.1_v2/<pair>.mutect2.contamFiltered_orientFiltered_realignmentFiltered.vcf.gz
