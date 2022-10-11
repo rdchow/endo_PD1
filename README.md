@@ -7,6 +7,7 @@ response to PD-1 immunotherapy in endometrial carcinoma"
 -Raw exome sequencing data are unavailable due to the provisions of the trial sponsors; the processed exome variant calls are available in Zenodo (10.5281/zenodo.6985601) and in this repository. <br />
 -Copy number segmentation files are in this repository.<br />
 -The predicted pathogenic/deleterious variant calls are available in the supplementary tables and also in this repository.<br />
-<br />
 -Various intermediate files and results from the study are also in this repository.
+<br />
+
 Please contact Ryan Chow (ryan.chow@yale.edu) with any questions.
